@@ -1,0 +1,6 @@
+seq_s_6130	transdecoder	gene	69651	200635	.	+	.	ID=REF_STRG_1_30064_XLOC_094439;Name=ID=REF_STRG_1_30064_XLOC_094439;gene_biotype=protein_coding
+seq_s_6130	transdecoder	mRNA	69651	200635	.	+	.	ID=REF_STRG_1_30064_XLOC_094439.1.p1;Parent=REF_STRG_1_30064_XLOC_094439;gene_biotype=protein_coding
+seq_s_6130	transdecoder	gene	279648	357820	.	+	.	ID=REF_STRG_1_30066_XLOC_094441;Name=ID=REF_STRG_1_30066_XLOC_094441;gene_biotype=protein_coding
+seq_s_6130	transdecoder	mRNA	279648	357820	.	+	.	ID=REF_STRG_1_30066_XLOC_094441.1.p1;Parent=REF_STRG_1_30066_XLOC_094441;gene_biotype=protein_coding
+seq_s_6130	transdecoder	gene	358769	437352	.	-	.	ID=REF_TRIN_16_00001_XLOC_094442;Name=ID=REF_STRG_1_30066_XLOC_094441;gene_biotype=protein_coding
+seq_s_6130	transdecoder	mRNA	358769	437352	.	-	.	ID=REF_TRIN_16_00001_XLOC_094442.1.p1;Parent=REF_TRIN_16_00001_XLOC_094442;gene_biotype=protein_coding

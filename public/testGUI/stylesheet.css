@@ -1,0 +1,620 @@
+html, body {
+    width: 100%;
+    min-height: auto;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    overflow-x: hidden;
+}
+
+.body-container {
+    width: 100%;
+    display: grid;
+    grid-template-areas: 
+    "left"
+    "right";
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr, 1fr;
+}
+
+
+.left-section {
+    grid-area: left;
+    width: 90%;
+    position: relative;
+    left: 10px;
+}
+
+.buttons-container {
+    background-color: rgb(228, 228, 228);
+    width: 100%;
+    padding: 15px;
+    height: calc(100vh - 10px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.add_track_button {
+    position: relative;
+    width: 100%;
+    top: 50px;
+    padding: 10px;
+    background-color: rgb(56, 56, 56);
+    color: white;
+    font-size: 24px;
+    border: 1px solid rgb(56, 56, 56);
+    border-radius: 4px;
+}
+
+.fa-plus-circle{
+    margin-right: 20px;
+ }
+
+.track-container {
+    position: relative;
+    top: 50%;
+    background-color: rgb(182, 181, 181);
+    padding: 5px;
+    border-bottom:15px solid rgb(228, 228, 228);
+    font-size: 14px;
+}
+
+#export-dropdown{
+    position: relative;
+    left: 70%;
+    top: 1%;
+    display: inline-block;
+    border: none;
+    background-color: #4d4d4d;
+    color: white;
+    padding: 5px;
+    z-index: 1000;
+    width: 100px;
+}
+
+#export-dropdown:hover, #export-pdf-button:hover{
+    background-color: rgb(180, 180, 180);
+    color: black;
+}
+
+.btn-row {
+    margin: 10px;
+    padding: 5px;
+}
+
+#add_canvas{
+    padding: 5px;
+    font-size: 20px;
+    width: 50px;
+    margin-top: 5px;
+    min-width: 50px;
+    position: relative;
+    left: 30px;
+}
+
+#add_canvas:hover {
+    background-color: rgb(56, 56, 56);
+    color: white;
+}
+
+ .right-section {
+    grid-area: right;
+    width: 100%;
+    position: relative;
+
+}
+
+.bars{
+    width: 100%;
+    display: flex;
+    position: relative;
+    gap: 10px;
+    
+}
+
+#add_view{
+    padding: 5px;
+    font-size: 20px;
+    width: 50px;
+    margin-top: 10px;
+    height: 50px;
+    position: relative;
+
+}
+
+#add_view:hover{
+    background-color: rgb(56, 56, 56);
+    color: white;
+}
+
+.view-btn{
+    padding: 15px;
+    background-color: none;
+    font-size: 15px;
+    border: none;
+    width: 100%;
+    border-bottom: 2px solid black;
+    margin-top: 10px;
+    position: relative;
+    left: 10px;
+} 
+
+.canvas-container {
+    background-color: rgb(211, 211, 211);
+    width: 97%;
+    position: relative;
+    padding: 20px;
+    font-size: 12px;
+}
+
+.canvas-button {
+    display: inline-block;
+    background: none;
+    border: none;
+    font-size: 20px;
+    border-bottom: 3px solid rgb(82, 80, 78);
+    box-shadow: none;
+    outline: none;
+    border-radius: 0;
+    text-decoration: none;
+    width: 100%;
+    transition: opacity 0.7s, color 0.3s, font-weight 0.3s;
+    color: rgb(82, 80, 78);
+    cursor: pointer;
+}
+
+.canvas {
+    display: flex;
+    width: 100%;
+    cursor: pointer;
+    min-height: 50px;
+    justify-items: center;
+    gap: 10px;
+
+}
+
+.canvas_bar .canvas_content {
+    display: block;
+}
+
+.canvas_bar .canvas_content.hidden {
+    display: none;
+}
+.canvas-button.active, .view-btn.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.canvas-button:not(.active), .view-btn:not(.active) {
+    opacity: 0.3;
+    font-weight: normal;
+}
+
+#canvas2, #canvas3 {
+    display: none;
+}
+
+
+.apply-all-button{
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(63, 63, 63);
+    position: relative;
+    width: 100%;
+    padding: 10px;
+    color: white;
+} 
+
+#inner-container {
+    display: grid;
+    grid-template-areas: "left-side right-side";
+    grid-template-columns: repeat(2, 1fr);
+    gap: 100px;
+}
+
+
+.canvas_bar {
+    cursor: pointer;
+    width: 100%;
+    position: relative;
+    font-size: 18px;
+    height: 30px;
+}
+
+.canvas_bar::after {
+    content: '';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-20%);
+    transform: rotate(90deg);
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent transparent black;
+}
+.success-msg {
+    color: green;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.view-control{
+    position: relative;
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 600;
+
+}
+
+
+.current-canvas{
+    position: relative;
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 600;
+    left: 50%;
+}
+
+
+.plot-container {
+   
+    position: relative;
+    right: 10%;
+    z-index: 1;
+    margin-top: 60px;
+    border: 2px solid transparent;
+    left: 50px;
+}
+
+
+#canvas-container-1, #canvas-container-2, #canvas-container-3{
+    margin-top: 10px;
+}
+
+label {
+    font-weight: bold;
+}
+
+
+#overlay {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 10, 0.2);
+    z-index: 999;
+    
+}
+
+.hidden {
+    display: none !important;
+}
+
+
+@media (min-width: 350px) {
+    #export-dropdown {
+        top: 3%;
+    }
+
+}
+
+@media (min-width: 1250px) {
+    .body-container {
+
+        grid-template-areas: 
+        "left right"
+        ;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+    }
+    #export-dropdown {
+        top: 10%;
+    }
+
+}
+
+.add_track_button:hover{
+    background-color: gray;
+    cursor: pointer;
+  }
+  .view-btn:hover, .canvas-button:hover{
+    cursor: pointer;
+    background-color: #6bb3ff;
+  }
+
+
+
+  /* ROBOT*/
+
+
+  .robot-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+/* Robot Head Styles */
+.robot-head {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(145deg, #5b6063, #7a7b7c);
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform 0.5s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    border: 3px solid #747e85;
+    position: relative;
+}
+
+/* Antenna */
+.antenna {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 25px;
+    background-color: #2c3e50;
+}
+
+.antenna::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 10px;
+    background-color: #e74c3c;
+    border-radius: 50%;
+    animation: blink 2s infinite;
+}
+
+/* Eyes Container */
+.eyes {
+    position: absolute;
+    top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+
+/* Individual Eye */
+.eye {
+    width: 20px;
+    height: 20px;
+    background: #ecf0f1;
+    border-radius: 5px;
+    position: relative;
+    border: 2px solid #2c3e50;
+}
+
+/* Eye Pupils */
+.eye::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #2c3e50;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Modal Overlay */
+.qa-container {
+    display: none;
+    position: fixed;
+    top: 25%;
+    left: 30%;
+    width: 35%;
+    height: 40%;
+    background: rgba(0, 0, 0, 0.308);
+    z-index: 1001;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.qa-container.visible {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+}
+
+/* Chat Interface */
+.chat-interface {
+    background: white;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.qa-container.visible .chat-interface {
+    transform: translateY(0);
+}
+
+/* Question Buttons */
+.questions {
+    margin-top: 20px;
+}
+
+.question-button {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.question-button:hover {
+    background: #e9ecef;
+    transform: translateX(5px);
+}
+
+.answer {
+    display: none;
+    background: #f8f9fa;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 10px;
+    border-left: 4px solid #3498db;
+    font-size: 14px;
+}
+
+.answer.visible {
+    display: block;
+    animation: slideIn 0.3s ease;
+}
+
+/* Close Button */
+.close-chat {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background: #e74c3c;
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+
+.close-chat:hover {
+    background: #c0392b;
+}
+
+/* Chat Interface Title */
+.chat-interface h3 {
+    margin: 0 0 20px 0;
+    font-size: 18px;
+    color: #2c3e50;
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.rotating {
+    animation: rotate 1s linear;
+}
+
+.robot-head:hover {
+    transform: scale(1.05);
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+
+.chromosome-select {
+    width: 200px;
+    padding: 15px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 15px;
+}
+
+#chromosome-selector {
+    margin-bottom: 15px;
+    padding: 15px;
+    background-color: rgb(182, 181, 181);
+    border-radius: 4px;
+}
+
+.chromosome-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.apply-chromosome-button {
+    padding: 5px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.apply-chromosome-button:hover {
+    background-color: #45a049;
+}
+
+[annotation-tooltip]:hover::after {
+    display: block;
+    position: absolute;
+    top: 50px;
+    content: attr(annotation-tooltip);
+    border-radius: 5px;
+    background: #2525259c;
+    padding: 10px;
+    font-size: 15px;
+  }
+
+  [view-tooltip]:hover::after {
+    display: block;
+    position: absolute;
+    top: 50px;
+    content: attr(view-tooltip);
+    border-radius: 5px;
+    background: #2525259c;
+    padding: 10px;
+    font-size: 15px;
+
+  }
+
+  [add-canvas-tooltip]:hover::after {
+    display: block;
+    position: absolute;
+    top: 50px;
+    content: attr(add-canvas-tooltip);
+    border-radius: 5px;
+    background: #2525259c;
+    padding: 10px;
+    font-size: 15px;
+
+  }

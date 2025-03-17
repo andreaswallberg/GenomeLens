@@ -1,0 +1,199 @@
+.left-side{
+  display: grid;
+  grid-template-columns: 50px, 1fr;
+  grid-template-rows: repeat(3, 1fr);
+}
+
+
+.input-group label {
+  grid-area: label;
+  margin-left: 5px;
+  font-size: 14px;
+  color: #333;
+  width: 100px;
+  text-align: left;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.mark{
+  grid-area: mark;
+  font-size: 14px;
+  padding: 5px;
+  border: 2px solid #8a8a8a;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: rgb(245, 245, 245);
+  width: 100%;
+} 
+
+ .color{
+  grid-area: color;
+  font-size: 14px;
+  padding: 5px;
+  border: 2px solid #8a8a8a;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: rgb(245, 245, 245);
+  width: 100%;
+}
+.interval-input  {
+  font-size: 14px;
+  padding: 5px;
+  border: 2px solid #8a8a8a;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: rgb(245, 245, 245);
+  width: 100%;
+}
+
+.right-side{
+  grid-area: right-side;
+  display: grid;
+  grid-template-columns: 50px, 1fr;
+  grid-template-rows: repeat(3, 1fr);
+}
+.file-container{
+  display: grid;
+  grid-template-columns: 1fr 30px 1fr 70px;
+  grid-template-areas: "plot-button or-inbetween  url-input url-button";
+  width: 100%;
+}
+.or-inbetween{
+  grid-area: or-inbetween;
+  position: relative;
+  top: 30%;
+  left: 5px;
+  font-size: 20px;
+  font-weight: 800;
+}   
+
+.plot-button{
+  grid-area: plot-button;
+  font-size: 14px;
+  padding: 12px;
+  color: #4d4d4d;
+  border: 2px solid rgb(182, 181, 181);
+  border-radius: 5px;
+  width: 100%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.url-input {
+  grid-area: url-input;
+  font-size: 14px;
+  padding: 12px;
+  color: #4d4d4d;
+  border: 2px solid rgb(182, 181, 181);
+  border-radius: 5px;
+  width: 100%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-left: 10px;
+}
+
+.url-button {
+  grid-area: url-button;
+  padding: 10px;
+  background-color: rgb(56, 56, 56);
+  color: white;
+  font-size: 14px;
+  border: 1px solid rgb(56, 56, 56);
+  border-radius: 4px;
+  height:100%; 
+}
+
+.apply-button{
+  width: 100%;
+  font-size: 20px;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: rgb(63, 63, 63);
+  color: white;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.apply-button:hover{
+  background-color: gray;
+  cursor: pointer;
+}
+
+.file-info{
+  margin-left: 20px;
+  position: relative;
+  top: 10px;
+  
+}
+.input-group {
+  display: flex;
+  align-items: right;
+  
+}
+
+.input-group input,
+.input-group select {
+  margin-top: 10px;
+}
+
+#clear_url_button:hover, .clear_settings_button:hover {
+  color: rgba(105, 38, 7, 0.583);
+  cursor: pointer;
+}
+
+
+button:active, #info_button:active, #close_button:active {
+  background-color: grey;
+}
+
+.url-input {
+  margin-right: 0px;
+  min-width: 10em;
+  border-color: rgb(221, 221, 221);
+} 
+
+#trackSelector {
+  display: none;
+}
+
+.filename-display{
+  position: relative;
+  font-weight: 600;
+  top: 5%;
+  color: rgb(29, 32, 192);
+  
+}
+.delete-track-button{
+  position: absolute;
+  background-color: transparent;
+  border: none;
+  top: 5%;
+  left: 90%;
+  padding: 5px;
+  color: rgb(185, 18, 18);
+  font-size: 40px;
+  box-shadow: none;
+}
+
+
+.custom-tooltip {
+  position: absolute;
+  background-color: #333;
+  color: #fff;
+  padding: 5px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+
+.chromosome-select {
+  margin-right: 10px;
+}
+
+#chromosome-selector .column-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

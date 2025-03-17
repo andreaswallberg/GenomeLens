@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Gosling Visualization</title>
+    <link rel="stylesheet" href="./testGUI/stylesheet.css">
+    <link rel="stylesheet" href="./testGUI/track.css">
+    <link rel="stylesheet" href="./testGUI/canvas-content.css">
+    <link rel="stylesheet" href="https://esm.sh/higlass@1.13/dist/hglib.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="importmap">
+        {
+            "imports": {
+              "react": "https://esm.sh/react@18",
+              "react-dom": "https://esm.sh/react-dom@18",
+              "pixi": "https://esm.sh/pixi.js@6",
+              "higlass-text": "https://esm.sh/higlass-text/es/index.js",
+              "higlass": "https://esm.sh/higlass@1.13?external=react,react-dom,pixi",
+              "gosling.js": "https://esm.sh/gosling.js@0.17.0?external=react,react-dom,pixi,higlass,higlass-text"
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div id="overlay"></div> 
+        <div id="buttons" class="all_buttons"></div>
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
+
+    <script type="module">
+        import { PlotSpecManager } from './testGUI/PlotSpecManager.js';         
+        import { all_buttons } from './testGUI/data_options.js';
+        import { overlay } from './testGUI/overlay.js';
+
+        const overlay_container = document.getElementById('overlay');
+        const buttons_container = document.getElementById('buttons');
+
+        import { URLfromFile, URLfromServer, GoslingPlotWithLocalData } from './testGUI/plot.js';
+        import { trackTemplate } from './testGUI/track_spec.js';
+        import {generateTracks} from './testGUI/track.js';
+
+
+        document.addEventListener('DOMContentLoaded', async function () { 
+            await overlay(overlay_container);
+            await all_buttons(buttons_container);
+            await generateTracks();
+        });
+    </script>
+    </div>
+</body>
+</html>

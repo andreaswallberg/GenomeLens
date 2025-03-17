@@ -1,0 +1,25 @@
+{
+  "name": "infravis-visualizing-adaptive-variation",
+  "version": "1.0.0",
+  "description": "A project within the course of Applied Bioinformatics, using the Gosling grammar to visualize adaptive variation. The project consists of two main parts: the development of a Graphical User Interface for the use of Gosling, as well as the generation of a catalog consisting of HTML pages with visualizations tailored for data provided.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "helmet": "^7.1.0",
+    "infravis-visualizing-adaptive-variation": "file:",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.0",
+    "pako": "^2.1.0",
+    "puppeteer": "^22.13.0",
+    "uuid": "^7.0.3"
+  }
+}
