@@ -1,5 +1,5 @@
 /**
- * @fileoverview Track specification template for InfraVIS visualization
+ * @fileoverview Track specification template
  * Defines the default configuration for visualization tracks
  * @module track_spec
  */

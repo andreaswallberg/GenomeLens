@@ -381,25 +381,34 @@ export function addCanvasBarToggle(barId, containerId) {
             window.canvas_states[2].filenames = {};
             window.canvas_states[3].filenames = {};
             
-            // Clear other settings
-            updateURLParameters("xDomain.interval", [0, 200000]);  
-            // Reset canvas states
+            // Clear URL parameters by replacing with default state
+            const cleanURL = window.location.href.split('?')[0];
+            window.history.replaceState({}, '', cleanURL);
+
+            // Reset canvas states to default
             for (let i = 1; i <= 3; i++) {
                 window.canvas_states[i] = {
                     trackCount: 1,
                     tracks: [],
+                    filenames: {},
                     view_control_settings: {
                         x_axis: '',
                         x_range: [0, 200000],
                         left_y_axis: '',
                         left_y_range: [0, 1],
                         right_y_axis: '',
-                        right_y_range: [0, 1]
+                        right_y_range: [0, 1],
+                        checked_left: [],
+                        checked_right: []
                     }
                 };
-            }     
-            // Reload the page
-            location.reload();
+            }
+            
+            // Reset plotSpec to default state
+            window.plotSpecManager.resetInstance();
+            
+            // Reload the page with clean URL
+            window.location.href = cleanURL;
         });
     }
 }
