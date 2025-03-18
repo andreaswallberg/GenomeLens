@@ -162,12 +162,6 @@ export async function handleOptions(data, button_data_track_number) {
       });
   });
 
-  bcolor.addEventListener('change', async function () {
-    const chosenBcolor = bcolor.value;
-    plotSpec.style.background = chosenBcolor;
-    await updateURLParameters("background", bcolor.value);
-  });
-
   const x_interval_buttons = document.querySelectorAll('.x_interval_button');
   x_interval_buttons.forEach(button => {
     button.addEventListener('click', async function () {

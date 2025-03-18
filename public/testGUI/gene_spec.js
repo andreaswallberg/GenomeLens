@@ -30,7 +30,7 @@ const gene_template = {
         },
         {
           "mark": "text",
-          "text": { "field": "Name", "type": "nominal" },
+          "text": { "field": "ID", "type": "nominal" },
           "x": { "field": "start", "type": "genomic" },
           "xe": { "field": "end", "type": "genomic" },
           "color": { "value": "#000000" },

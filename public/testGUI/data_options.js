@@ -184,6 +184,10 @@ export async function all_buttons(container) {
         window.canvas_num = 0;
         canvas_number.innerHTML = 'Gene Canvas';
         current_canvas.innerHTML = 'Current Canvas Gene';
+        
+        // Hide add track button and track selector for annotation canvas
+        document.getElementById('add_track_button').style.display = 'none';
+        document.getElementById('trackCountSelector').style.display = 'none';
     
         // Restore chromosome selector and trigger rerender
         const chromosomeData = window.canvas_states[0].chromosomeData;
@@ -218,7 +222,12 @@ export async function all_buttons(container) {
         setActiveCanvas(canvas1);
         window.canvas_num = 1;
         canvas_number.innerHTML = 'Canvas 1';
-        current_canvas.innerHTML = 'Current Canvas 1'
+        current_canvas.innerHTML = 'Current Canvas 1';
+        
+        // Show add track button and track selector for regular canvas
+        document.getElementById('add_track_button').style.display = 'block';
+        document.getElementById('trackCountSelector').style.display = 'block';
+        
         if (!window.object_1_created) {
             addOrUpdateCanvasObject('canvas1');
             window.object_1_created = true;
@@ -232,7 +241,12 @@ export async function all_buttons(container) {
         setActiveCanvas(canvas2);
         window.canvas_num = 2;
         canvas_number.innerHTML = 'Canvas 2';
-        current_canvas.innerHTML = 'Current Canvas 2'
+        current_canvas.innerHTML = 'Current Canvas 2';
+        
+        // Show add track button and track selector for regular canvas
+        document.getElementById('add_track_button').style.display = 'block';
+        document.getElementById('trackCountSelector').style.display = 'block';
+        
         if (!window.object_2_created) {
             addOrUpdateCanvasObject('canvas2');
             window.object_2_created = true;
@@ -246,7 +260,12 @@ export async function all_buttons(container) {
         setActiveCanvas(canvas3);
         window.canvas_num = 3;
         canvas_number.innerHTML = 'Canvas 3';
-        current_canvas.innerHTML = 'Current Canvas 3'
+        current_canvas.innerHTML = 'Current Canvas 3';
+        
+        // Show add track button and track selector for regular canvas
+        document.getElementById('add_track_button').style.display = 'block';
+        document.getElementById('trackCountSelector').style.display = 'block';
+        
         if (!window.object_3_created) {
             addOrUpdateCanvasObject('canvas3');
             window.object_3_created = true;
@@ -582,13 +601,6 @@ export function generateViewControl(currentView){
                                         <input type="text" class="interval-input" id="x_range_end">
                                     </div>
                                 </div>
-                            <div class='bcolor-container'> 
-                                <label for="bcolor">Select background color  </label>
-                                <select name="bcolor" id="bcolor">
-                                    <option value="white">white</option>
-                                    <option value="grey">grey</option>
-                                </select>
-                            </div>
                         </div>
                         <div class="btn-row" id="global-y-variables-left"> 
                             <h2>Y-axis</h2>
