@@ -477,7 +477,33 @@ export function view_control_apply_changes () {
      document.querySelector('.apply-all-button').addEventListener('click', async function () {     
         const currentView = window.currentView;
         const currentCanvasState = window.canvas_states[currentView];    
-        // X-axis range
+        const plotSpec = getCurrentViewSpec();
+        
+        // Get selected column names and update canvas title
+        const xSelector = document.getElementById('columnSelectorX_0');
+        const yLeftSelector = document.getElementById('columnSelectorYLeft');
+        const yRightSelector = document.getElementById('columnSelectorYRight');
+        
+        const xColumn = xSelector.options[xSelector.selectedIndex]?.textContent || '';
+        const yLeftColumn = yLeftSelector.options[yLeftSelector.selectedIndex]?.textContent || '';
+        const yRightColumn = yRightSelector.options[yRightSelector.selectedIndex]?.textContent || '';
+
+        // Update canvas title
+        if (plotSpec && xColumn) {
+            let title = `X: ${xColumn}`;
+            if (yLeftColumn) title += ` | Left Y: ${yLeftColumn}`;
+            if (yRightColumn) title += ` | Right Y: ${yRightColumn}`;
+            plotSpec.title = title;
+            
+            // Also update the visual canvas title in HTML
+            const canvasNumber = window.canvas_num;
+            const canvasTitle = document.querySelector('.canvas_number');
+            if (canvasTitle) {
+                canvasTitle.textContent = title;
+            }
+        }
+
+        // Rest of settings updates
         const x_start = parseFloat(document.getElementById('x_range_start').value);
         const x_end = parseFloat(document.getElementById('x_range_end').value);
         let x_interval = [x_start, x_end];  
@@ -502,11 +528,10 @@ export function view_control_apply_changes () {
         currentCanvasState.view_control_settings.x_range = x_interval;
         currentCanvasState.view_control_settings.left_y_range = y_interval_left;
         currentCanvasState.view_control_settings.right_y_range = y_interval_right;
-        currentCanvasState.view_control_settings.x_axis = document.getElementById('columnSelectorX_0').value;
-        currentCanvasState.view_control_settings.left_y_axis = document.getElementById('columnSelectorYLeft').value;
-        currentCanvasState.view_control_settings.right_y_axis = document.getElementById('columnSelectorYRight').value;
+        currentCanvasState.view_control_settings.x_axis = xSelector.value;
+        currentCanvasState.view_control_settings.left_y_axis = yLeftSelector.value;
+        currentCanvasState.view_control_settings.right_y_axis = yRightSelector.value;
         // Update plot spec and redraw
-        const plotSpec = getCurrentViewSpec();
         plotSpec.xDomain.interval = currentCanvasState.view_control_settings.x_range;
         // To update the checkboxes for left and right.
         const leftChecked = document.querySelectorAll('#checkbox-left-axis input[type="checkbox"]:checked');

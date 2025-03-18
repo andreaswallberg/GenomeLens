@@ -131,13 +131,17 @@ export async function handleOptions(data, button_data_track_number) {
     });
   });
 
+  // Add title updates to Y-axis changes as well
   let columnSelectorL = document.getElementById('columnSelectorYLeft');
   columnSelectorL.addEventListener('change', async function () {
-    await _eventsSelectedTracksPerYAxis(columnSelectorL, 'left', plotSpec);
+      updateCanvasTitle(plotSpec);
+      await _eventsSelectedTracksPerYAxis(columnSelectorL, 'left', plotSpec);
   });
+
   let columnSelectorR = document.getElementById('columnSelectorYRight');
   columnSelectorR.addEventListener('change', async function () {
-    await _eventsSelectedTracksPerYAxis(columnSelectorR, 'right', plotSpec);
+      updateCanvasTitle(plotSpec);
+      await _eventsSelectedTracksPerYAxis(columnSelectorR, 'right', plotSpec);
   });
 
   const markButtons = document.querySelectorAll('.mark');
