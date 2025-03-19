@@ -91,6 +91,13 @@ export async function all_buttons(container) {
         </div>
     </div>
     `;
+    
+    // Hide add track button and track selector for annotation on initial load
+    if (window.canvas_num === 0) {
+        document.getElementById('add_track_button').style.display = 'none';
+        document.getElementById('trackCountSelector').style.display = 'none';
+    }
+    
     const canvas0 = document.getElementById('canvas0');
     const canvas1 = document.getElementById('canvas1');
     const canvas2 = document.getElementById('canvas2');

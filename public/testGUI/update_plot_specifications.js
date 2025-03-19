@@ -28,7 +28,7 @@ const fileHeaders = new Map();
  * @param {number} button_data_track_number - Button data track number.
  */
 export async function handleOptions(data, button_data_track_number) {
-  const plotSpec = getCurrentViewSpec(); // Get the current plot spec
+  const plotSpec = getCurrentViewSpec();
 
   const columnSelectorsX = document.querySelectorAll(`.columnSelectorX`);
   const columnSelectorsY = document.querySelectorAll(`.columnSelectorY`);
