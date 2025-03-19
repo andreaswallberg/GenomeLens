@@ -10,7 +10,7 @@ async function convertBlobToDataURL(blobUrl) {
         });
     } catch (error) {
         console.error('Error converting blob to data URL:', error);
-        return blobUrl; // Return original URL if conversion fails
+        return blobUrl
     }
 }
 
@@ -92,6 +92,22 @@ async function generateHTMLContent(plotSpec) {
 }
 
 export function exportingFigures() {
+    // Create filename modal
+    const filenameModal = document.createElement('div');
+    filenameModal.innerHTML = `
+        <div id="filename-modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            background: white; padding: 20px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 1001;">
+            <h3 style="margin-top: 0;">Enter filename</h3>
+            <input type="text" id="filename-input" style="width: 100%; padding: 5px; margin: 10px 0;" 
+                placeholder="Enter filename (without extension)">
+            <div style="text-align: right;">
+                <button id="cancel-filename" style="margin-right: 10px; padding: 5px 10px;">Cancel</button>
+                <button id="confirm-filename" style="padding: 5px 10px; background: #4CAF50; color: white; border: none;">
+                    Confirm</button>
+            </div>
+        </div>`;
+    document.body.appendChild(filenameModal);
+
     // The loading settings
     const loadingOverlay = document.createElement('div');
     loadingOverlay.id = 'loading-overlay';
@@ -116,7 +132,6 @@ export function exportingFigures() {
     };
 
     const exportDropdown = document.getElementById('export-dropdown');
-    // Add null check before adding event listener
     if (!exportDropdown) {
         console.error('Export dropdown element not found');
         return;
@@ -126,215 +141,84 @@ export function exportingFigures() {
         const selectedValue = event.target.value;
         const container = document.getElementById('plot-container-1');
         const notification = document.getElementById('notification');
-        // To show notification
-        const showMessage = (message, color) => {
-            notification.textContent = message;
-            notification.style.backgroundColor = color;
-            notification.style.display = 'block';
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 3000);
-        };
-
+        const modal = document.getElementById('filename-modal');
+        
         if (!container) {
             console.error('Plot container element not found');
             showMessage('Plot container element not found', '#ff0000');
             return;
         }
 
-        const svgElements = container.getElementsByTagName('svg');
-        // If there is no SVG created
-        if (svgElements.length === 0) {
-            console.error('No SVG elements found in the plot container');
-            showMessage('No SVG elements found in the plot container', '#ff0000');
-            return;
-        }
+        // Show filename modal and handle export
+        const handleExport = (defaultName) => {
+            const modal = document.getElementById('filename-modal');
+            modal.style.display = 'block';
+            // Add delay to trigger transition
+            setTimeout(() => modal.classList.add('visible'), 10);
+            const input = document.getElementById('filename-input');
+            input.value = defaultName;
 
-        const svgContent = container.innerHTML;
-        // to fetch the JSON of the SVG.
-        const jsonSpec = window.plotSpecManager.exportPlotSpecAsJSON();
-        // The dependencies that are required for the SVG to be rendered
-        const plotSpec = window.plotSpecManager.getPlotSpec();
-        const htmlContent = await generateHTMLContent(plotSpec);
+            document.getElementById('cancel-filename').onclick = () => {
+                modal.classList.remove('visible');
+                setTimeout(() => modal.style.display = 'none', 300);
+                exportDropdown.value = '';
+            };
 
-        let endpoint = '';
+            document.getElementById('confirm-filename').onclick = async () => {
+                modal.classList.remove('visible');
+                setTimeout(() => modal.style.display = 'none', 300);
+                const filename = input.value.trim() || defaultName;
+                modal.style.display = 'none';
+                
+                // Continue with export process
+                showLoading();
+                if (selectedValue === 'html') {
+                    const htmlContent = await generateHTMLContent(window.plotSpecManager.getPlotSpec());
+                    fetch('/save-html', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ htmlContent }),
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.text();
+                    })
+                    .then(htmlContent => {
+                        const blob = new Blob([htmlContent], { type: 'text/html' });
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `${filename}.html`;
+                        document.body.appendChild(a);
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(a);
+                        showMessage('HTML file downloaded successfully', '#02a102');
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                        showMessage('Error during export: ' + error.message, '#ff0000');
+                    })
+                    .finally(() => {
+                        hideLoading();
+                        exportDropdown.value = '';
+                    });
+                }
+            };
+        };
+
         switch (selectedValue) {
-            case 'pdf':
-                endpoint = '/save-pdf';
-                break;
-            case 'png':
-                endpoint = '/save-png';
-                break;
             case 'html':
-                endpoint = '/save-html';
+                handleExport('plot-container');
                 break;
             default:
                 console.error('Invalid export option selected');
                 showMessage('Invalid export option selected', '#ff0000');
                 return;
         }
-
-        showLoading();
-
-        if (selectedValue === 'pdf') {
-            fetch(endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ htmlContent }),
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.blob();
-            })
-            .then(blob => {
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'plot.pdf';
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-                document.body.removeChild(a);
-                showMessage('PDF file downloaded successfully', '#02a102');
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                showMessage('Error during export: ' + error.message, '#ff0000');
-            })
-            .finally(hideLoading);
-        } else if (selectedValue === 'png') {
-            fetch(endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ htmlContent }),
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.blob();
-            })
-            .then(blob => {
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'plot.png';
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-                document.body.removeChild(a);
-                showMessage('PNG file downloaded successfully', '#02a102');
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                showMessage('Error during export: ' + error.message, '#ff0000');
-            })
-            .finally(hideLoading);
-        } else if (selectedValue === 'html') {
-            fetch(endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ htmlContent }),
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.text();  // Expecting text content for HTML
-            })
-            .then(htmlContent => {
-                const blob = new Blob([htmlContent], { type: 'text/html' });
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'plot-container.html';
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-                document.body.removeChild(a);
-                showMessage('HTML file downloaded successfully', '#02a102');
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                showMessage('Error during export: ' + error.message, '#ff0000');
-            })
-            .finally(hideLoading);
-        } else if (selectedValue === 'json') {
-            fetch(endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ jsonContent: jsonSpec }),
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(jsonContent => {
-                const blob = new Blob([JSON.stringify(jsonContent)], { type: 'application/json' });
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'plot.json';
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-                document.body.removeChild(a);
-                showMessage('JSON file downloaded successfully', '#02a102');
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                showMessage('Error during export: ' + error.message, '#ff0000');
-            })
-            .finally(hideLoading);
-        }
     });
-
-    // Remove or update the JSON export button listener since we're replacing it with PDF
-    // If you want to keep it for reference, add a null check:
-    const exportJsonButton = document.getElementById('export-json-button');
-    if (exportJsonButton) {
-        exportJsonButton.addEventListener('click', () => {
-            const jsonSpec = window.plotSpecManager.exportPlotSpecAsJSON();
-            showLoading();
-            fetch('/save-json', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ jsonContent: jsonSpec }),
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                const a = document.createElement('a');
-                a.href = data.fileUrl;
-                a.download = 'plotSpec.json';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                showMessage('JSON file downloaded successfully', '#02a102');
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                showMessage('Error during export: ' + error.message, '#ff0000');
-            })
-            .finally(hideLoading);
-        });
-    }
 }

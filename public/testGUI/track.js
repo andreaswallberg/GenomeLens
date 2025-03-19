@@ -11,47 +11,30 @@ import { updateURLParameters, updateChromosomeView } from './update_plot_specifi
  * Resets track settings to their default values
  * @param {number} trackNumber - Index of the track to reset
  */
-export function resetTrackSettings(trackNumber) {
-    const defaultValues = {
-        binSize: 10,
-        sampleLength: 1000,
-        markSize: 3,
-        mark: 'point',
-        color: '#e41a1c'
-    };
-
-    // Reset input fields
-    document.getElementById(`binsize_${trackNumber}`).value = defaultValues.binSize;
-    document.getElementById(`samplelength_${trackNumber}`).value = defaultValues.sampleLength;
-    document.getElementById(`marksize_${trackNumber}`).value = defaultValues.markSize;
-    document.getElementById(`mark_${trackNumber}`).selectedIndex = 0;
-    document.getElementById(`color_${trackNumber}`).selectedIndex = 0;
-
-    const plotSpec = getCurrentViewSpec();
-    if (plotSpec.tracks[trackNumber].data.url !== '') {
-        document.getElementById(`filename-display-${trackNumber}`).textContent = 'No file selected';
-        window.canvas_states[window.canvas_num].filenames[trackNumber] = 'No file selected';
-    }
-
-    // Reset track settings to defaults
-    plotSpec.tracks[trackNumber].data.url = '';
-    plotSpec.tracks[trackNumber].data.binSize = defaultValues.binSize;
-    plotSpec.tracks[trackNumber].data.sampleLength = defaultValues.sampleLength;
-    plotSpec.tracks[trackNumber].size.value = defaultValues.markSize;
-    plotSpec.tracks[trackNumber].mark = defaultValues.mark;
-    plotSpec.tracks[trackNumber].color.value = defaultValues.color;
-
-    // Clear specific URL parameters for this track
-    const cleanURL = new URL(window.location.href);
-    cleanURL.searchParams.delete(`data.binSize${trackNumber}`);
-    cleanURL.searchParams.delete(`data.sampleLength${trackNumber}`);
-    cleanURL.searchParams.delete(`size.value${trackNumber}`);
-    cleanURL.searchParams.delete(`mark${trackNumber}`);
-    cleanURL.searchParams.delete(`color.value${trackNumber}`);
-    window.history.replaceState({}, '', cleanURL);
-
-    // Update visualization
-    GoslingPlotWithLocalData(window.canvas_num);
+export function resetTrackSettings (trackNumber) {
+  document.getElementById(`binsize_${trackNumber}`).value = '';
+  document.getElementById(`samplelength_${trackNumber}`).value = '';
+  document.getElementById(`marksize_${trackNumber}`).value = '';
+  document.getElementById(`mark_${trackNumber}`).selectedIndex = 0;
+  document.getElementById(`color_${trackNumber}`).selectedIndex = 0;
+  const plotSpec = getCurrentViewSpec();
+  if(plotSpec.tracks[trackNumber].data.url !== '') {
+    document.getElementById(`filename-display-${trackNumber}`).textContent = 'No file selected';
+    window.canvas_states[window.canvas_num].filenames[trackNumber] = 'No file selected';
+  }
+  plotSpec.tracks[trackNumber].data.url = ''
+  plotSpec.tracks[trackNumber].data.binSize = 10;
+  plotSpec.tracks[trackNumber].data.sampleLength = 1000;
+  plotSpec.tracks[trackNumber].size.value = 3;
+  plotSpec.tracks[trackNumber].mark = 'point';
+  plotSpec.tracks[trackNumber].color.value = '#e41a1c';
+  // Apply changes and update the UI
+  updateURLParameters(`data.binSize${trackNumber}`, 0);
+  updateURLParameters(`data.sampleLength${trackNumber}`, 0);
+  updateURLParameters(`size.value${trackNumber}`, 0);
+  updateURLParameters(`mark${trackNumber}`, 'point');
+  updateURLParameters(`color.value${trackNumber}`, '#e41a1c');
+  GoslingPlotWithLocalData(window.canvas_num);
 }
 
 /**
@@ -135,7 +118,7 @@ export async function generateTracks () {
             <button class="plot-button" data-track="${i}"><i class="fa fa-upload" style="font-size:18px;"></i> Select file </button> 
             <input type="file" class="file-input"   multiple accept=".csv, .tsv, .gz, .tbi, .gff" style="display: none;">
             <label for="urlinput_${i}" class='or-inbetween'>OR</label>
-            <input type="url" id="urlinput_${i}" class="url-input" placeholder="Enter URL">
+            <input data-description-id="enterURL" type="url" id="urlinput_${i}" class="url-input" placeholder="Enter URL">
             <button class="url-button" data-track="${i}">Load</button>
             <label class="success-msg" id="msg-load-track-${i}"></label>
         </div>
@@ -231,14 +214,15 @@ export async function showHideTracks () {
       }
   }
 }
-// The questions for the robot
+
 const tooltips = {
   binsize: 'The bin size defines the size of bins in your data visualization.',
   samplelength: 'Sample length is the number of data points to sample.',
   mark: 'Choose the marker type for the visualization.',
   color: 'Select the color for the plots.',
   marksize: 'Specify the size of the markers.',
-  file:"File name"
+  file:"File name",
+  enterURL: "To fetch data remotely from a URL"
 };
 
 /**
@@ -256,7 +240,7 @@ export async function generateTrackBinAndSampleInputs(trackNumber) {
                 <h2>Chromosome Selection</h2>
                 <div class="column-container">
                     <select id="chromosomeSelect" class="chromosome-select">
-                        <option value="" disabled selected>Select chromosome</option>
+                        <option  value="" disabled selected>Select chromosome</option>
                         ${chromosomeData ? Object.keys(chromosomeData.options).map(chromosome => `
                             <option value="${chromosome}">${/^(chr)?([0-9]+|[XY]|MT)$/i.test(chromosome) 
                                 ? `Chromosome ${chromosome}`

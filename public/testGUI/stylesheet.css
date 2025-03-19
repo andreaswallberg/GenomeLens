@@ -619,3 +619,37 @@ label {
     font-size: 15px;
     width: 150px;
   }
+
+#filename-modal input {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#filename-modal button {
+    cursor: pointer;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+#filename-modal button:hover {
+    opacity: 0.8;
+}
+
+#cancel-filename {
+    background: #f5f5f5;
+}
+
+#confirm-filename:hover {
+    background: #45a049;
+}
+
+#filename-modal {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#filename-modal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}

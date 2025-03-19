@@ -51,12 +51,10 @@ export async function all_buttons(container) {
             <div id="header" class="buttons-container">   
                 <select id="export-dropdown" class="dropdown-content">
                     <option value="" disabled selected>Export as</option>
-                    <option id="export-pdf-button" value="pdf">PDF</option>
-                    <option id="export-png-button" value="png">PNG</option>
                     <option id="export-html-button" value="html">HTML</option>
                 </select> 
                 <div class="btn-row">
-                    <h2 class='canvas_number'>Annotation canvas</h2>
+                    <h2 class='canvas_number'>Annotation</h2>
                     <h2>Track Controls</h2>
                     <span id="clear_url_button" class="clear_all_settings"><u>  Clear All </u></span>                   
                     <button id='add_track_button' class="add_track_button"><i class="fa fa-plus-circle" style="font-size:24px;"></i>Add Track</button>
@@ -185,7 +183,7 @@ export async function all_buttons(container) {
         canvas_number.innerHTML = 'Gene Canvas';
         current_canvas.innerHTML = 'Current Canvas Gene';
         
-        // Hide add track button and track selector for annotation canvas
+        // Hide add track button and track selector for annotation
         document.getElementById('add_track_button').style.display = 'none';
         document.getElementById('trackCountSelector').style.display = 'none';
     
@@ -381,34 +379,25 @@ export function addCanvasBarToggle(barId, containerId) {
             window.canvas_states[2].filenames = {};
             window.canvas_states[3].filenames = {};
             
-            // Clear URL parameters by replacing with default state
-            const cleanURL = window.location.href.split('?')[0];
-            window.history.replaceState({}, '', cleanURL);
-
-            // Reset canvas states to default
+            // Clear other settings
+            updateURLParameters("xDomain.interval", [0, 200000]);  
+            // Reset canvas states
             for (let i = 1; i <= 3; i++) {
                 window.canvas_states[i] = {
                     trackCount: 1,
                     tracks: [],
-                    filenames: {},
                     view_control_settings: {
                         x_axis: '',
                         x_range: [0, 200000],
                         left_y_axis: '',
                         left_y_range: [0, 1],
                         right_y_axis: '',
-                        right_y_range: [0, 1],
-                        checked_left: [],
-                        checked_right: []
+                        right_y_range: [0, 1]
                     }
                 };
-            }
-            
-            // Reset plotSpec to default state
-            window.plotSpecManager.resetInstance();
-            
-            // Reload the page with clean URL
-            window.location.href = cleanURL;
+            }     
+            // Reload the page
+            location.reload();
         });
     }
 }
@@ -477,33 +466,7 @@ export function view_control_apply_changes () {
      document.querySelector('.apply-all-button').addEventListener('click', async function () {     
         const currentView = window.currentView;
         const currentCanvasState = window.canvas_states[currentView];    
-        const plotSpec = getCurrentViewSpec();
-        
-        // Get selected column names and update canvas title
-        const xSelector = document.getElementById('columnSelectorX_0');
-        const yLeftSelector = document.getElementById('columnSelectorYLeft');
-        const yRightSelector = document.getElementById('columnSelectorYRight');
-        
-        const xColumn = xSelector.options[xSelector.selectedIndex]?.textContent || '';
-        const yLeftColumn = yLeftSelector.options[yLeftSelector.selectedIndex]?.textContent || '';
-        const yRightColumn = yRightSelector.options[yRightSelector.selectedIndex]?.textContent || '';
-
-        // Update canvas title
-        if (plotSpec && xColumn) {
-            let title = `X: ${xColumn}`;
-            if (yLeftColumn) title += ` | Left Y: ${yLeftColumn}`;
-            if (yRightColumn) title += ` | Right Y: ${yRightColumn}`;
-            plotSpec.title = title;
-            
-            // Also update the visual canvas title in HTML
-            const canvasNumber = window.canvas_num;
-            const canvasTitle = document.querySelector('.canvas_number');
-            if (canvasTitle) {
-                canvasTitle.textContent = title;
-            }
-        }
-
-        // Rest of settings updates
+        // X-axis range
         const x_start = parseFloat(document.getElementById('x_range_start').value);
         const x_end = parseFloat(document.getElementById('x_range_end').value);
         let x_interval = [x_start, x_end];  
@@ -528,10 +491,11 @@ export function view_control_apply_changes () {
         currentCanvasState.view_control_settings.x_range = x_interval;
         currentCanvasState.view_control_settings.left_y_range = y_interval_left;
         currentCanvasState.view_control_settings.right_y_range = y_interval_right;
-        currentCanvasState.view_control_settings.x_axis = xSelector.value;
-        currentCanvasState.view_control_settings.left_y_axis = yLeftSelector.value;
-        currentCanvasState.view_control_settings.right_y_axis = yRightSelector.value;
+        currentCanvasState.view_control_settings.x_axis = document.getElementById('columnSelectorX_0').value;
+        currentCanvasState.view_control_settings.left_y_axis = document.getElementById('columnSelectorYLeft').value;
+        currentCanvasState.view_control_settings.right_y_axis = document.getElementById('columnSelectorYRight').value;
         // Update plot spec and redraw
+        const plotSpec = getCurrentViewSpec();
         plotSpec.xDomain.interval = currentCanvasState.view_control_settings.x_range;
         // To update the checkboxes for left and right.
         const leftChecked = document.querySelectorAll('#checkbox-left-axis input[type="checkbox"]:checked');

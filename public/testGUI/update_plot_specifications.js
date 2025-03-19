@@ -1,6 +1,5 @@
 import { getCurrentViewSpec, GoslingPlotWithLocalData } from './plot.js';
 import { PlotSpecManager } from './PlotSpecManager.js';
-import { gene_template } from './gene_spec.js';
 
 window.canvas_states = {
   0: { trackCount: 1, tracks: [],filenames:{}, view_control_settings: {x_axis: '', x_range: [0, 200000], left_y_axis: '', left_y_range: [0, 1], right_y_axis: '', right_y_range: [0, 1], checked_left : [], checked_right : []}},
@@ -17,7 +16,7 @@ window.object_3_created = false
 window.trackCount = 5;
 window.displayed_canvas = 1
 
-window.plotSpecManager = new PlotSpecManager(); // Initialize PlotSpecManager globally
+window.plotSpecManager = new PlotSpecManager();
 
 const fileHeaders = new Map();
 
@@ -119,8 +118,8 @@ export async function handleOptions(data, button_data_track_number) {
   
       for (let trackValue = 0; trackValue < trackCountValue; trackValue++) {
         plotSpec.tracks[trackValue].data.column = chosenColumnName;
-  
-        if (window.canvas_num !== 0) { // Only modify tooltips for non-GFF data
+        // Only modify tooltips for non-GFF data
+        if (window.canvas_num !== 0) { 
           plotSpec.tracks[trackValue].tooltip[1].field = chosenColumnName;
           plotSpec.tracks[trackValue].tooltip[1].alt = chosenColumnName;
           
@@ -523,10 +522,10 @@ function updateDynamicTooltips(plotSpec, header, button_data_track_number) {
     // Store headers per canvas and track
     if (!window.tooltipHeaders) {
         window.tooltipHeaders = {
-            0: {}, // Canvas 0 tracks
-            1: {}, // Canvas 1 tracks
-            2: {}, // Canvas 2 tracks
-            3: {}  // Canvas 3 tracks
+            0: {},
+            1: {},
+            2: {},
+            3: {} 
         };
     }
 
@@ -607,7 +606,6 @@ async function handleChromosomeSelection(file) {
                   // Store current selection
                   localStorage.setItem('lastChromosomeSelection', selectedChromosome);
                   
-                  // Force update and rerender
                   await updateChromosomeView(selectedChromosome, maxPosition);
                   
               } catch (error) {
@@ -631,7 +629,6 @@ async function handleChromosomeSelection(file) {
   }
 }
 
-// Add helper functions
 export function updateChromosomeSelect(chromosomeInfo, selectElement) {
   selectElement.innerHTML = '<option value="" disabled selected>Select chromosome</option>';
   Object.keys(chromosomeInfo).forEach(chromosome => {
@@ -684,7 +681,6 @@ export async function updateChromosomeView(selectedChromosome, maxPosition) {
       // Save current chromosome info
       localStorage.setItem('lastChromosomeSelection', selectedChromosome);
       
-      // Force rerender
       await GoslingPlotWithLocalData();
       
   } catch (error) {
