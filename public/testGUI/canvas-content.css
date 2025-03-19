@@ -172,7 +172,10 @@ input[type="checkbox"] {
 .y-range-right select {
   flex: 1;
 }
-
+.x-axis-select{
+  margin-top: 115px;
+  
+}
 .x-axis-select #x_range_select {
   width: auto;
 }
