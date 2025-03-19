@@ -19,12 +19,46 @@
             }
         }
     </script>
+    <style>
+        .footer {
+            width: 100%;
+            padding: 20px 0;
+            background-color: #f8f9fa;
+            margin-top: 30px;
+            text-align: center;
+            border-top: 1px solid #e7e7e7;
+        }
+        .footer-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        .footer-logos img {
+            height: 50px;
+            max-width: 150px;
+            object-fit: contain;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <div id="overlay"></div> 
         <div id="buttons" class="all_buttons"></div>
     
+        <!-- Add footer with logos -->
+        <div class="footer">
+            <div class="footer-logos">
+                <img src="./logos/UU_logo_color.png" alt="Uppsala University logo">
+                <img src="./logos/umu-logo-left-neg-SE.png" alt="Umeå University logo">
+                <img src="./logos/SciLifeLab_Logotype_Green_POS.png" alt="SciLifeLab logo">
+                <img src="./logos/lnu_wordmark_symbol_rgb.png" alt="Linnaeus University logo">
+                <img src="./logos/SU_logotyp_Portrait_800px.png" alt="Stockholm University logo">
+                <img src="./logos/infravis_1920x1080.png" alt="InfraVis logo">
+
+            </div>
+        </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/1.0.3/pako.min.js"></script>
 
