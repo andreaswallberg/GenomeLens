@@ -275,7 +275,6 @@ export async function all_buttons(container) {
             addOrUpdateCanvasObject('canvas3');
             window.object_3_created = true;
         }
-        restoreCanvasColumnSelectors(3);
         document.querySelector('.canvas-container').style.display = 'block';
 
         updateCanvasUI();

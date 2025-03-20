@@ -20,52 +20,6 @@ window.plotSpecManager = new PlotSpecManager();
 
 const fileHeaders = new Map();
 
-/**
- * Updates the canvas title based on selected columns
- * @param {Object} plotSpec - The current plot specification
- * @param {Object} [columns] - Optional object containing selected column names
- */
-function updateCanvasTitle(plotSpec, columns = null) {
-    if (window.canvas_num === 0) {
-        return; 
-    }
-
-    if (!columns) {
-        const xSelector = document.getElementById('columnSelectorX_0');
-        const leftSelector = document.getElementById('columnSelectorYLeft');
-        const rightSelector = document.getElementById('columnSelectorYRight');
-
-        if (xSelector && leftSelector && rightSelector && 
-            xSelector.selectedIndex > 0 && 
-            (leftSelector.selectedIndex > 0 || rightSelector.selectedIndex > 0)) {
-            
-            columns = {
-                xAxis: xSelector.options[xSelector.selectedIndex].textContent || 'X',
-                leftYAxis: leftSelector.options[leftSelector.selectedIndex]?.textContent || '',
-                rightYAxis: rightSelector.options[rightSelector.selectedIndex]?.textContent || ''
-            };
-        } else {
-            return
-        }
-    }
-
-    let title = `X: ${columns.xAxis} | `;
-    
-    // Add left Y-axis columns
-    const leftChecked = document.querySelectorAll('#checkbox-left-axis input[type="checkbox"]:checked');
-    if (leftChecked.length > 0 && columns.leftYAxis) {
-        title += `Left Y: ${columns.leftYAxis}`;
-    }
-
-    // Add right Y-axis columns
-    const rightChecked = document.querySelectorAll('#checkbox-right-axis input[type="checkbox"]:checked');
-    if (rightChecked.length > 0 && columns.rightYAxis) {
-        title += ` | Right Y: ${columns.rightYAxis}`;
-    }
-
-    // Update the plot specification title
-    plotSpec.title = title;
-}
 
 /**
  * Handle various options for data, such as file or server URL.
@@ -84,15 +38,19 @@ export async function handleOptions(data, button_data_track_number) {
 
   // Check if the provided data is a file or a URL
   if (window.canvas_num !== 0) {
+    // For non-GFF data, set the URL for the current track
     const fileURL = URL.createObjectURL(data);
     plotSpec.tracks[button_data_track_number].data.url = fileURL;
+    // Remove indexUrl for non-GFF data
     delete plotSpec.tracks[button_data_track_number].data.indexUrl;
   }
   if (window.canvas_num === 0 && data instanceof File) {
+    // For GFF data, set up chromosome selector
     await handleChromosomeSelection(data);
 }
   if (data instanceof File) {
     if (window.canvas_num === 0) {
+      // GFF data
       const geneHeaderResult = await extractGeneHeader(data);
       header = geneHeaderResult.header;
       geneData = geneHeaderResult.data;
@@ -317,7 +275,11 @@ async function _eventsSelectedTracksPerYAxis(columnSelector, side, plotSpec) {
         if (!(Number.isNaN(intervalArray[0]) || Number.isNaN(intervalArray[1]))) {
           plotSpec.tracks[trackIndex].y.domain = intervalArray;
         }            
-          if (!Array.isArray(plotSpec.tracks[trackIndex].tooltip)) {
+        // plotSpec.tracks[trackIndex].y.axis = side;
+        // plotSpec.tracks[trackIndex].y.field = chosenColumnName;
+        
+        // Ensure tooltip is an array before modifying it
+        if (!Array.isArray(plotSpec.tracks[trackIndex].tooltip)) {
           plotSpec.tracks[trackIndex].tooltip = [];
         }
         if (plotSpec.tracks[trackIndex].tooltip[0]) {
@@ -328,6 +290,7 @@ async function _eventsSelectedTracksPerYAxis(columnSelector, side, plotSpec) {
           plotSpec.tracks[trackIndex].tooltip[0] = { field: chosenColumnName, alt: chosenColumnName };
         }
       } else {
+        // For GFF data, we don't need to modify these properties
         console.log("GFF data: Not modifying y-axis properties");
       }
     } else {
@@ -378,6 +341,7 @@ async function extractGeneHeader(file) {
 
     reader.onload = async () => {
       try {
+        // Check if file is gzipped by looking at magic numbers
         const buffer = reader.result;
         const bytes = new Uint8Array(buffer);
         let fileContent;
@@ -425,6 +389,7 @@ async function extractGeneHeader(file) {
               entry[col] = row[index];
             });
 
+            // Track maximum end position and sequence ID
             const end = parseInt(entry.end);
             if (end > maxEnd) {
               maxEnd = end;
@@ -621,9 +586,11 @@ async function handleChromosomeSelection(file) {
           // Update dropdown
           updateChromosomeSelect(chromosomeInfo, chromosomeSelect);
 
+          // Remove old event listeners
           const newSelect = chromosomeSelect.cloneNode(true);
           chromosomeSelect.parentNode.replaceChild(newSelect, chromosomeSelect);
 
+          // Add new event listener
           newSelect.addEventListener('change', async function() {
               try {
                   const selectedChromosome = this.value;
@@ -677,18 +644,22 @@ export async function updateChromosomeView(selectedChromosome, maxPosition) {
   try {
       const plotSpec = window.plotSpecManager.getPlotSpec();
       
+      // Store current selection
       window.currentAssemblyInfo = {
           seqid: selectedChromosome,
           length: maxPosition
       };
 
+      // Only update canvas0 view
       if (plotSpec.views[0]) {
+          // Update assembly info for canvas0 only
           plotSpec.views[0].assembly = [[selectedChromosome, maxPosition]];
           plotSpec.views[0].xDomain = {
               chromosome: selectedChromosome,
               interval: [0, maxPosition]
           };
 
+          // Update tracks for canvas0 only
           plotSpec.views[0].tracks?.forEach(track => {
               if (!track.data) track.data = {};
               track.data = {
@@ -701,8 +672,10 @@ export async function updateChromosomeView(selectedChromosome, maxPosition) {
           });
       }
 
+      // Update state
       window.plotSpecManager.updateAssemblyInfo(selectedChromosome, maxPosition);
       
+      // Save current chromosome info
       localStorage.setItem('lastChromosomeSelection', selectedChromosome);
             
   } catch (error) {
