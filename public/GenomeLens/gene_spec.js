@@ -48,7 +48,7 @@ const gene_template = {
           },
           {
               "dataTransform": [
-              {"type": "filter", "field": "type", "oneOf": ["gene"]}
+                  {"type": "filter", "field": "type", "oneOf": ["gene"]}
               ],
               "mark": "rule",
               "x": {"field": "start", "type": "genomic", "axis": "top"},
