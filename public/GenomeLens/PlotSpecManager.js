@@ -228,8 +228,14 @@ class PlotSpecManager {
             field: "strand",
             type: "nominal",
             domain: ["+", "-"],
-            range: ["#FF0000", "#0000FF"]
+            range: ["#0000FF", "#FF0000"]
         };
+  	    // Add row configuration for strands
+  	    track.row = {
+            field: "strand",
+  			    type: "nominal",
+  			    domain: ["+", "-"]
+  		  };
 
         track.tooltip = [
             { field: "start", type: "quantitative", alt: "Start Position" },
