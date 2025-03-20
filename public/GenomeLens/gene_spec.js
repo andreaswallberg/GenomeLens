@@ -19,55 +19,52 @@ const gene_template = {
         ]
       },
       "tracks": [
-        {
+          {
+          "dataTransform": [
+              {"type": "filter", "field": "type", "oneOf": ["gene"]},
+              {"type": "filter", "field": "strand", "oneOf": ["+"]}
+          ],
           "mark": "triangleRight",
           "x": { "field": "end", "type": "genomic", "axis": "top" },
           "size": { "value": 15 },
-          "color": { "value": "#FF0000" },
-          "filter": [
-            {"field": "strand", "oneOf": ["+"]}
-          ]
-        },
-        {
+          },
+          {
           "mark": "text",
           "text": { "field": "ID", "type": "nominal" },
           "x": { "field": "start", "type": "genomic" },
           "xe": { "field": "end", "type": "genomic" },
           "color": { "value": "#000000" },
-          "style": { "dy": -10 }
-        },
-        {
+          "style": { "dy": -15 }
+          },
+          {
+          "dataTransform": [
+              {"type": "filter", "field": "type", "oneOf": ["gene"]},
+              {"type": "filter", "field": "strand", "oneOf": ["-"]}
+          ],
           "mark": "triangleLeft",
           "x": { "field": "start", "type": "genomic" },
           "size": { "value": 15 },
-          "color": { "value": "#0000FF" },
           "style": { "align": "right" },
-          "filter": [
-            {"field": "strand", "oneOf": ["-"]}
-          ]
-        },
-        {
-          "mark": "rule",
-          "x": { "field": "start", "type": "genomic" },
-          "strokeWidth": { "value": 5 },
-          "xe": { "field": "end", "type": "genomic" },
-          "color": { "value": "#FF0000" },
-          "style": { "linePattern": { "type": "triangleRight", "size": 1 } },
-          "filter": [
-            {"field": "strand", "oneOf": ["+"]}
-          ]
-        },
-        {
-          "mark": "rule",
-          "x": { "field": "start", "type": "genomic" },
-          "strokeWidth": { "value": 5 },
-          "xe": { "field": "end", "type": "genomic" },
-          "color": { "value": "#0000FF" },
-          "style": { "linePattern": { "type": "triangleLeft", "size": 1 } },
-          "filter": [
-            {"field": "strand", "oneOf": ["-"]}
-          ]
-        }
+          },
+          {
+              "dataTransform": [
+              {"type": "filter", "field": "type", "oneOf": ["gene"]}
+              ],
+              "mark": "rule",
+              "x": {"field": "start", "type": "genomic", "axis": "top"},
+              "strokeWidth": {"value": 3},
+              "xe": {"field": "end", "type": "genomic"}
+          },
+          // Exons are currently not visualized
+          {
+          "dataTransform": [
+              {"type": "filter", "field": "type", "oneOf": ["exon"]},
+          ],
+              "mark": "rect",
+              "x": {"field": "start", "type": "genomic", "axis": "top"},
+              "size": {"value": 10},
+              "xe": {"field": "end", "type": "genomic"}
+          },
       ],
       "width": 800,
       "height": 80
