@@ -140,8 +140,6 @@ export function exportingFigures() {
     exportDropdown.addEventListener('change', async (event) => {
         const selectedValue = event.target.value;
         const container = document.getElementById('plot-container-1');
-        const notification = document.getElementById('notification');
-        const modal = document.getElementById('filename-modal');
         
         if (!container) {
             console.error('Plot container element not found');

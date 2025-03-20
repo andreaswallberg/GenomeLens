@@ -589,7 +589,7 @@ export function generateViewControl(currentView){
                                 <div class="column-container">
                                      <span class='copy_range_msg'>Range Copied</span>
                                     <div class='x-axis-select'>
-                                        <label for="columnSelectorX_0">X-axis: </label>
+                                        <label class = 'x-axis-label'for="columnSelectorX_0">X-axis: </label>
                                         <select name="xcolumn" id="columnSelectorX_0" class="columnSelectorX"  data-track="0">
                                             <option value="" disabled selected></option>
                                         </select>
@@ -600,7 +600,7 @@ export function generateViewControl(currentView){
                                         </select>
                                     </div>
                                     <div class = 'column1'> 
-                                        <label for="x_range_start">X-range:</label>
+                                        <label class = 'x-range-label'for="x_range_start">X-range:</label>
                                         <input type="text" class="interval-input" id="x_range_start">                    
                                         <span class='dashed-range'>-</span>
                                         <input type="text" class="interval-input" id="x_range_end">

@@ -22,7 +22,7 @@ const gene_template = {
         {
           "mark": "triangleRight",
           "x": { "field": "end", "type": "genomic", "axis": "top" },
-          "size": { "value": 10 },
+          "size": { "value": 15 },
           "color": { "value": "#FF0000" },
           "filter": [
             {"field": "strand", "oneOf": ["+"]}
@@ -39,7 +39,7 @@ const gene_template = {
         {
           "mark": "triangleLeft",
           "x": { "field": "start", "type": "genomic" },
-          "size": { "value": 10 },
+          "size": { "value": 15 },
           "color": { "value": "#0000FF" },
           "style": { "align": "right" },
           "filter": [
@@ -49,7 +49,7 @@ const gene_template = {
         {
           "mark": "rule",
           "x": { "field": "start", "type": "genomic" },
-          "strokeWidth": { "value": 3 },
+          "strokeWidth": { "value": 5 },
           "xe": { "field": "end", "type": "genomic" },
           "color": { "value": "#FF0000" },
           "style": { "linePattern": { "type": "triangleRight", "size": 1 } },
@@ -60,7 +60,7 @@ const gene_template = {
         {
           "mark": "rule",
           "x": { "field": "start", "type": "genomic" },
-          "strokeWidth": { "value": 3 },
+          "strokeWidth": { "value": 5 },
           "xe": { "field": "end", "type": "genomic" },
           "color": { "value": "#0000FF" },
           "style": { "linePattern": { "type": "triangleLeft", "size": 1 } },
@@ -69,7 +69,6 @@ const gene_template = {
           ]
         }
       ],
-      "opacity": { "value": 0.8 },
       "width": 800,
       "height": 80
     }

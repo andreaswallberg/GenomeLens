@@ -155,7 +155,7 @@ class PlotSpecManager {
             assembly: this.assemblyInfo,
             linkingId: "detail",
             style: {
-              background: "#D3D3D3",
+              background: "#FFFFFF",
               backgroundOpacity: 0.1,
             },
             tracks: [
@@ -182,7 +182,7 @@ class PlotSpecManager {
             assembly: "unknown",
             linkingId: "detail",
             style: {
-              background: "#D3D3D3",
+              background: "#FFFFFF",
               backgroundOpacity: 0.1,
             },
             tracks: [

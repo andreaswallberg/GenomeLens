@@ -3,7 +3,6 @@
  * Provides API endpoints for visualization data and export functionality
  * @module app
  * @requires express
- * @requires puppeteer
  * @requires cors
  */
 
@@ -11,8 +10,6 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const puppeteer = require('puppeteer');
-const fs = require('fs');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const morgan = require('morgan');
