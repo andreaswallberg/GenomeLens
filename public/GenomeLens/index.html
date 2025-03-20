@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <title>Gosling Visualization</title>
-    <link rel="stylesheet" href="./testGUI/stylesheet.css">
-    <link rel="stylesheet" href="./testGUI/track.css">
-    <link rel="stylesheet" href="./testGUI/canvas-content.css">
+    <link rel="stylesheet" href="./GenomeLens/stylesheet.css">
+    <link rel="stylesheet" href="./GenomeLens/track.css">
+    <link rel="stylesheet" href="./GenomeLens/canvas-content.css">
     <link rel="stylesheet" href="https://esm.sh/higlass@1.13/dist/hglib.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="importmap">
@@ -63,16 +63,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/1.0.3/pako.min.js"></script>
 
     <script type="module">
-        import { PlotSpecManager } from './testGUI/PlotSpecManager.js';         
-        import { all_buttons } from './testGUI/data_options.js';
-        import { overlay } from './testGUI/overlay.js';
+        import { PlotSpecManager } from './GenomeLens/PlotSpecManager.js';         
+        import { all_buttons } from './GenomeLens/data_options.js';
+        import { overlay } from './GenomeLens/overlay.js';
 
         const overlay_container = document.getElementById('overlay');
         const buttons_container = document.getElementById('buttons');
 
-        import { URLfromFile, URLfromServer, GoslingPlotWithLocalData } from './testGUI/plot.js';
-        import { trackTemplate } from './testGUI/track_spec.js';
-        import {generateTracks} from './testGUI/track.js';
+        import { URLfromFile, URLfromServer, GoslingPlotWithLocalData } from './GenomeLens/plot.js';
+        import { trackTemplate } from './GenomeLens/track_spec.js';
+        import {generateTracks} from './GenomeLens/track.js';
 
 
         document.addEventListener('DOMContentLoaded', async function () { 

@@ -31,10 +31,9 @@ Each view control can have its own settings and options.
 ## How it works!
 You can upload file either locally from your machine or from a url, the file has to be CSV or TSV format.
 You have to press on apply button for any change you make.
-There are 3 ways for exporting, either as PNG, HTML or JSON.
+You can export your figure as HTML.
 The exported files will be downloaded into your machine.
 
-Note: make sure to use a file from a url, since you wont be able to see the plot if you used a local file for PNG (this does not yeild for JSON or HTML exportation)
 
 ## For Production
 create a `.env` file in the project’s root directory.

@@ -52,7 +52,7 @@ const gene_template = {
           "strokeWidth": { "value": 3 },
           "xe": { "field": "end", "type": "genomic" },
           "color": { "value": "#FF0000" },
-          "style": { "linePattern": { "type": "triangleRight", "size": 5 } },
+          "style": { "linePattern": { "type": "triangleRight", "size": 1 } },
           "filter": [
             {"field": "strand", "oneOf": ["+"]}
           ]
@@ -63,7 +63,7 @@ const gene_template = {
           "strokeWidth": { "value": 3 },
           "xe": { "field": "end", "type": "genomic" },
           "color": { "value": "#0000FF" },
-          "style": { "linePattern": { "type": "triangleLeft", "size": 5 } },
+          "style": { "linePattern": { "type": "triangleLeft", "size": 1 } },
           "filter": [
             {"field": "strand", "oneOf": ["-"]}
           ]
