@@ -471,7 +471,6 @@ export function resetViewSettings() {
  * To fetch and preserve the settings for each view. 
  */
 export function view_control_apply_changes () {
-     // Add event listener to the apply all button for the canvas
      document.querySelector('.apply-all-button').addEventListener('click', async function () {     
         const currentView = window.currentView;
         const currentCanvasState = window.canvas_states[currentView];    
@@ -558,9 +557,47 @@ export function view_control_apply_changes () {
         updateURLParameters("xDomain.interval", currentCanvasState.view_control_settings.x_range);
         updateURLParameters("yDomain.left", currentCanvasState.view_control_settings.left_y_range);
         updateURLParameters("yDomain.right", currentCanvasState.view_control_settings.right_y_range);
+
+        // Update canvas title based on selected columns
+        updateCanvasTitle(plotSpec, {
+            xAxis: document.getElementById('columnSelectorX_0').options[currentCanvasState.view_control_settings.x_axis].textContent,
+            leftYAxis: document.getElementById('columnSelectorYLeft').options[currentCanvasState.view_control_settings.left_y_axis].textContent,
+            rightYAxis: document.getElementById('columnSelectorYRight').options[currentCanvasState.view_control_settings.right_y_axis].textContent
+        });
+
         await GoslingPlotWithLocalData();
     });
 }
+
+/**
+ * Updates the canvas title based on selected columns
+ * @param {Object} plotSpec - The current plot specification
+ * @param {Object} columns - Object containing selected column names
+ */
+function updateCanvasTitle(plotSpec, columns) {
+    // Don't modify title for annotation canvas
+    if (window.canvas_num === 0) {
+        return; 
+    }
+
+    let title = `X: ${columns.xAxis} | `;
+    
+    // Add left Y-axis columns
+    const leftChecked = document.querySelectorAll('#checkbox-left-axis input[type="checkbox"]:checked');
+    if (leftChecked.length > 0) {
+        title += `Left Y: ${columns.leftYAxis}`;
+    }
+
+    // Add right Y-axis columns
+    const rightChecked = document.querySelectorAll('#checkbox-right-axis input[type="checkbox"]:checked');
+    if (rightChecked.length > 0) {
+        title += ` | Right Y: ${columns.rightYAxis}`;
+    }
+
+    // Update the plot specification title
+    plotSpec.title = title;
+}
+
 /**
  * To generate a new view with a paraemter currentview that works as an ID. 
  * @param {int} currentView 
@@ -726,6 +763,19 @@ async function loadAndApplyViewSettings(view) {
             }
         }
     });
+
+    // Update title when loading view settings
+    const xSelector = document.getElementById('columnSelectorX_0');
+    const leftSelector = document.getElementById('columnSelectorYLeft');
+    const rightSelector = document.getElementById('columnSelectorYRight');
+
+    if (xSelector && leftSelector && rightSelector) {
+        updateCanvasTitle(plotSpec, {
+            xAxis: xSelector.options[currentCanvasState.view_control_settings.x_axis]?.textContent || '',
+            leftYAxis: leftSelector.options[currentCanvasState.view_control_settings.left_y_axis]?.textContent || '',
+            rightYAxis: rightSelector.options[currentCanvasState.view_control_settings.right_y_axis]?.textContent || ''
+        });
+    }
 
     // Update plot
     await GoslingPlotWithLocalData();
