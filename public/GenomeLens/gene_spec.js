@@ -55,7 +55,6 @@ const gene_template = {
               "strokeWidth": {"value": 3},
               "xe": {"field": "end", "type": "genomic"}
           },
-          // Exons are currently not visualized
           {
           "dataTransform": [
               {"type": "filter", "field": "type", "oneOf": ["exon"]},

@@ -15,10 +15,8 @@ async function convertBlobToDataURL(blobUrl) {
 }
 
 async function generateHTMLContent(plotSpec) {
-    // Deep clone the spec to avoid modifying the original
     const processedSpec = JSON.parse(JSON.stringify(plotSpec));
     
-    // Convert the data URLs now
     if (processedSpec.views) {
         for (const view of processedSpec.views) {
             if (view.tracks) {
@@ -168,7 +166,6 @@ export function exportingFigures() {
                 const filename = input.value.trim() || defaultName;
                 modal.style.display = 'none';
                 
-                // Continue with export process
                 showLoading();
                 if (selectedValue === 'html') {
                     const htmlContent = await generateHTMLContent(window.plotSpecManager.getPlotSpec());

@@ -63,7 +63,6 @@ export async function generateTracks () {
     const trackCount = currentCanvasState.trackCount;
     const container = document.getElementById("container");
     let htmlContent = '';
-    // Render buttons containers
     for (let i = 0; i < trackCount; i++) { 
         htmlContent += `
             <div id="track${i}" class="track-container">      
@@ -73,7 +72,6 @@ export async function generateTracks () {
     }
     container.innerHTML = '';    
     container.innerHTML += htmlContent;        
-    // Render detailing track options
     htmlContent = '';
     for (let i = 0; i < trackCount; i++) {
         
@@ -173,7 +171,6 @@ function showTooltip(element, description) {
   tooltip.className = 'custom-tooltip';
   tooltip.innerText = description;
 
-  // Append to body
   document.body.appendChild(tooltip);
 
   // Position the tooltip
@@ -181,7 +178,6 @@ function showTooltip(element, description) {
   tooltip.style.left = rect.left + window.pageXOffset + 'px';
   tooltip.style.top = rect.top + window.pageYOffset - tooltip.offsetHeight + 'px';
 
-  // Store reference to tooltip element
   element._tooltip = tooltip;
 }
 
@@ -336,21 +332,17 @@ export async function deleteTrack (trackToDelete) {
   // Remove the file name from FILENAMES object
   delete window.canvas_states[window.canvas_num].filenames[trackToDelete];
 
-  // Shift the remaining file names
   for (let i = trackToDelete + 1; i < currentCanvasState.trackCount; i++) {
       if (window.canvas_states[window.canvas_num].filenames[i]) {
           window.canvas_states[window.canvas_num].filenames[i - 1] = window.canvas_states[window.canvas_num].filenames[i];
           delete window.canvas_states[window.canvas_num].filenames[i];
       }
   }
-  // Update the track count
   currentCanvasState.trackCount--;
   // Update the UI
   document.getElementById('trackCountSelector').value = currentCanvasState.trackCount;
   await generateTracks();
-  // Update the plot
   await GoslingPlotWithLocalData(window.canvas_num);
-  // Update URL parameters
   updateURLParameters(`track${trackToDelete}`, null);
 }
 
@@ -360,10 +352,8 @@ export async function deleteTrack (trackToDelete) {
  * @returns {Promise<void>}
  */
 export async function track_settings_btns(trackNumber) {
-    // Load files based on local file input
     const fileInputs = document.querySelectorAll('.file-input');
     
-    // Trigger file input on plot button click
     document.querySelectorAll('.plot-button').forEach(function (button, button_data_track_num) {
       button.addEventListener('click', function () {
         fileInputs[button_data_track_num].click();
@@ -457,7 +447,6 @@ export async function track_settings_btns(trackNumber) {
           plotSpec.tracks[trackNumber].size.value = markSize;
           await updateURLParameters(`size.value${trackNumber}`, markSize);
         }
-        // Now trigger a single render
         await GoslingPlotWithLocalData(window.canvas_num);
       });
     });

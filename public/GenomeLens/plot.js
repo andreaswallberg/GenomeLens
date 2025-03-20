@@ -10,7 +10,6 @@ if(window.canvas_num) {
   window.canvas_states[window.canvas_num].filenames = window.canvas_states[window.canvas_num].filenames || {};
 }
 
-// Add helper functions for URL management
 function createFileURL(file) {
   if (file instanceof File) {
       return URL.createObjectURL(file);
@@ -47,17 +46,14 @@ export async function URLfromFile(fileInputs, button_data_track_number) {
               throw new Error('Canvas 0 requires both .gz and .tbi files.');
           }
 
-          // Create and store URLs
           const gzURL = createFileURL(gzFile);
           const tbiURL = createFileURL(tbiFile);
 
-          // Store URLs globally
           window.fileURLs = {
               gff: gzURL,
               index: tbiURL
           };
 
-          // Update plot specification
           const plotSpec = getCurrentViewSpec();
           plotSpec.tracks.forEach(track => {
               track.data = {
@@ -73,7 +69,6 @@ export async function URLfromFile(fileInputs, button_data_track_number) {
               };
           });
 
-          // Store filenames
           window.canvas_states[window.canvas_num].filenames[button_data_track_number] = {
               data: gzFile.name,
               index: tbiFile.name,
@@ -159,7 +154,6 @@ export async function URLfromServer(URL_input, button_data_track_number) {
     if (URL_input) {
       let urls = [];
       if (isCanvas0) {
-        // Expecting two URLs separated by a comma
         urls = URL_input.split(',').map(url => url.trim());
         if (urls.length !== 2) {
           throw new Error('Canvas 0 requires exactly 2 URLs: one .gz and one .tbi.');
@@ -191,8 +185,6 @@ export async function URLfromServer(URL_input, button_data_track_number) {
         if (filenameElement) {
           filenameElement.textContent = `${window.canvas_states[window.canvas_num].filenames[button_data_track_number].data}, ${window.canvas_states[window.canvas_num].filenames[button_data_track_number].index}`;
         }
-
-        // Validate extensions
         const gzExtension = gzURL.split('.').pop().toLowerCase();
         const tbiExtension = tbiURL.split('.').pop().toLowerCase();
 
@@ -221,7 +213,6 @@ export async function URLfromServer(URL_input, button_data_track_number) {
         }
       }
 
-      // Fetch and process files
       for (let i = 0; i < urls.length; i++) {
         const url = urls[i];
         const filename = url.split('/').pop();
@@ -280,7 +271,7 @@ async function configureDataType(extension, track) {
   }
 
   if (isCanvas0) {
-    track.data.type = 'gff'; // Correct data type for GFF
+    track.data.type = 'gff';
     track.data.indexUrl = track.data.indexUrl || '';
   } else {
     const validExtensions = ['tsv', 'csv'];
@@ -318,11 +309,9 @@ export async function GoslingPlotWithLocalData() {
             throw new Error('Plot specification not found');
         }
 
-        // Only update assembly info if we're on canvas0
         if (window.canvas_num === 0 && window.currentAssemblyInfo?.seqid) {
             const { seqid, length } = window.currentAssemblyInfo;
             
-            // Only update the first view (canvas0) with chromosome info
             if (plotSpec.views[0]) {
                 plotSpec.views[0].assembly = [[seqid, length]];
                 plotSpec.views[0].xDomain = {
@@ -330,7 +319,6 @@ export async function GoslingPlotWithLocalData() {
                     interval: [0, length]
                 };
 
-                // Update GFF tracks with proper schema
                 plotSpec.views[0].tracks?.forEach(track => {
                     if (!track.data) track.data = {};
                     track.data = {
@@ -339,7 +327,6 @@ export async function GoslingPlotWithLocalData() {
                         indexUrl: window.fileURLs?.index || track.data.indexUrl
                     };
                     
-                    // Ensure attributesToFields is properly set for GFF files
                     if (!track.data.attributesToFields) {
                         track.data.attributesToFields = [
                             { attribute: "gene_biotype", defaultValue: "unknown" },
@@ -356,10 +343,8 @@ export async function GoslingPlotWithLocalData() {
             throw new Error('Plot container not found');
         }
 
-        // Clear previous plot to avoid stacking issues
         container.innerHTML = '';
         
-        // Create clean copy of plot spec to avoid schema validation issues
         const cleanPlotSpec = JSON.parse(JSON.stringify(plotSpec));
         
         await embed(container, cleanPlotSpec);
@@ -370,7 +355,6 @@ export async function GoslingPlotWithLocalData() {
     }
 }
 
-// Add cleanup listener
 window.addEventListener('beforeunload', () => {
   if (window.fileURLs) {
       revokeFileURL(window.fileURLs.gff);
@@ -391,22 +375,18 @@ export async function checkURLParameters(track, track_nr) {
       const generateParamName = (param) => `${param}${track_nr}`;
       const plotSpec = getCurrentViewSpec();
 
-    // Initialize style object if it doesn't exist
     if (!plotSpec.style) {
         plotSpec.style = {};
       }
 
-      // Safeguard for tooltip array
       if (!Array.isArray(track.tooltip)) {
         track.tooltip = [];
       }
 
-      // Ensure tooltip has at least two elements
       while (track.tooltip.length < 2) {
         track.tooltip.push({});
       }
 
-      // Safely set properties only if they exist
       if (track.x) {
         const xField = urlSearch.get(generateParamName("x.field")) || track.data.column;
         track.x.field = xField;
@@ -442,7 +422,7 @@ export async function checkURLParameters(track, track_nr) {
       // Iterate over all tracks in plotSpec and update y.domain if applicable
       for (let i = 0; i < plotSpec.tracks.length; i++) {
         const currentTrack = plotSpec.tracks[i];
-        if (currentTrack.y) { // Only update if y exists
+        if (currentTrack.y) {
           currentTrack.y.domain = urlSearch.has("y.domain")
             ? urlSearch.get("y.domain").split(",").map(Number)
             : currentTrack.y.domain;

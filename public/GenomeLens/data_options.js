@@ -275,6 +275,7 @@ export async function all_buttons(container) {
             addOrUpdateCanvasObject('canvas3');
             window.object_3_created = true;
         }
+        restoreCanvasColumnSelectors(3);
         document.querySelector('.canvas-container').style.display = 'block';
 
         updateCanvasUI();
@@ -349,8 +350,8 @@ export function addOrUpdateCanvasObject(canvasId) {
         assembly: "unknown",
         linkingId: "detail",
         style: {
-            background: "#D3D3D3",
-            backgroundOpacity: 0.1,
+            background: "#FFFFFF",  // Changed from #D3D3D3 to #FFFFFF
+            backgroundOpacity: 1,   // Changed from 0.1 to 1 for solid white
         },
         tracks: [
             window.plotSpecManager.createTrack(),
@@ -361,7 +362,6 @@ export function addOrUpdateCanvasObject(canvasId) {
         ],
     };
     
-    // Generate new canvas with the new ID.
     window.plotSpecManager.generateCanvas(canvasId, newCanvasObject);
 }
 // the toggle effect for the canvas bar
@@ -381,16 +381,13 @@ export function addCanvasBarToggle(barId, containerId) {
     const clearAllSettingsButton = document.querySelector('#clear_url_button');
     if (clearAllSettingsButton) {
         clearAllSettingsButton.addEventListener('click', () => {
-            // Clear FILENAMES object
             window.canvas_states[1].filenames = {};
             window.canvas_states[2].filenames = {};
             window.canvas_states[3].filenames = {};
             
-            // Clear URL parameters by replacing current URL with base URL
             const baseUrl = window.location.href.split('?')[0];
             window.history.replaceState({}, document.title, baseUrl);
             
-            // Reset canvas states
             for (let i = 1; i <= 3; i++) {
                 window.canvas_states[i] = {
                     trackCount: 1,
@@ -405,7 +402,6 @@ export function addCanvasBarToggle(barId, containerId) {
                     }
                 };
             }     
-            // Reload the page
             location.reload();
         });
     }
@@ -575,7 +571,6 @@ export function view_control_apply_changes () {
  * @param {Object} columns - Object containing selected column names
  */
 function updateCanvasTitle(plotSpec, columns) {
-    // Don't modify title for annotation canvas
     if (window.canvas_num === 0) {
         return; 
     }

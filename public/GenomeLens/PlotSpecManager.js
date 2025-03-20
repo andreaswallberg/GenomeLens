@@ -156,7 +156,7 @@ class PlotSpecManager {
             linkingId: "detail",
             style: {
               background: "#FFFFFF",
-              backgroundOpacity: 0.1,
+              backgroundOpacity: 1,
             },
             tracks: [
               this.createGeneTrack(0),
@@ -183,7 +183,7 @@ class PlotSpecManager {
             linkingId: "detail",
             style: {
               background: "#FFFFFF",
-              backgroundOpacity: 0.1,
+              backgroundOpacity: 1,
             },
             tracks: [
               this.createTrack(),
@@ -210,18 +210,6 @@ class PlotSpecManager {
   createGeneTrack(index) {
     if (gene_template.views?.[0]?.tracks?.[index]) {
         const track = deepCopy(gene_template.views[0].tracks[index]);
-
-        // Set up basic track data configuration
-        track.data = {
-            type: "gff",
-            url: "",
-            indexUrl: "",
-            attributesToFields: [
-                { attribute: "gene_biotype", defaultValue: "unknown" },
-                { attribute: "Name", defaultValue: "unknown" },
-                { attribute: "ID", defaultValue: "unknown" }
-            ]
-        };
 
         // Add color configuration for strands
         track.color = {
