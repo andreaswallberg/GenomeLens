@@ -245,9 +245,6 @@ export async function handleOptions(data, button_data_track_number) {
       await _eventsSelectedTracksPerYAxis(columnSelectorR, 'right', plotSpec);
     });
   });
-  if (window.canvas_num ==0){
-    await GoslingPlotWithLocalData()
-  }
 
   let msg = document.getElementById(`msg-load-track-${button_data_track_number}`);
   msg.textContent = "File loaded successfully";
@@ -680,9 +677,7 @@ export async function updateChromosomeView(selectedChromosome, maxPosition) {
       
       // Save current chromosome info
       localStorage.setItem('lastChromosomeSelection', selectedChromosome);
-      
-      await GoslingPlotWithLocalData();
-      
+            
   } catch (error) {
       console.error('Error in updateChromosomeView:', error);
       throw error;

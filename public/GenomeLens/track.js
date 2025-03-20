@@ -457,7 +457,8 @@ export async function track_settings_btns(trackNumber) {
           plotSpec.tracks[trackNumber].size.value = markSize;
           await updateURLParameters(`size.value${trackNumber}`, markSize);
         }
-        GoslingPlotWithLocalData(window.canvas_num);
+        // Now trigger a single render
+        await GoslingPlotWithLocalData(window.canvas_num);
       });
     });
   
@@ -490,6 +491,7 @@ export async function track_settings_btns(trackNumber) {
                     try {
                         localStorage.setItem('lastChromosomeSelection', selectedChromosome);
                         await updateChromosomeView(selectedChromosome, maxPosition);
+                        await GoslingPlotWithLocalData();
                         console.log('Successfully updated chromosome view');
                     } catch (error) {
                         console.error('Error applying chromosome selection:', error);

@@ -330,16 +330,23 @@ export async function GoslingPlotWithLocalData() {
                     interval: [0, length]
                 };
 
-                // Update GFF tracks
+                // Update GFF tracks with proper schema
                 plotSpec.views[0].tracks?.forEach(track => {
                     if (!track.data) track.data = {};
                     track.data = {
-                        ...track.data,
                         type: 'gff',
-                        url: window.fileURLs.gff,
-                        indexUrl: window.fileURLs.index,
-                        chromosomeId: seqid
+                        url: window.fileURLs?.gff || track.data.url,
+                        indexUrl: window.fileURLs?.index || track.data.indexUrl
                     };
+                    
+                    // Ensure attributesToFields is properly set for GFF files
+                    if (!track.data.attributesToFields) {
+                        track.data.attributesToFields = [
+                            { attribute: "gene_biotype", defaultValue: "unknown" },
+                            { attribute: "Name", defaultValue: "unknown" },
+                            { attribute: "ID", defaultValue: "unknown" }
+                        ];
+                    }
                 });
             }
         }
@@ -349,12 +356,17 @@ export async function GoslingPlotWithLocalData() {
             throw new Error('Plot container not found');
         }
 
-        await embed(container, plotSpec);
+        // Clear previous plot to avoid stacking issues
+        container.innerHTML = '';
+        
+        // Create clean copy of plot spec to avoid schema validation issues
+        const cleanPlotSpec = JSON.parse(JSON.stringify(plotSpec));
+        
+        await embed(container, cleanPlotSpec);
         console.log('Plot embedded successfully');
 
     } catch (error) {
         console.error('Error in GoslingPlotWithLocalData:', error);
-        throw error;
     }
 }
 
