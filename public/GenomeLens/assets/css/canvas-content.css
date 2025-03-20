@@ -140,7 +140,7 @@ input[type="checkbox"] {
 
 #x_range_select {
   position: relative;
-  top: 12px;
+  top: 7px;
   left: 5px;
   background-color: rgb(81, 143, 224);
   border: none;
@@ -175,16 +175,16 @@ input[type="checkbox"] {
   flex: 1;
 }
 .x-axis-select{
-  margin-top: 115px;
+  margin-top: 120px;
 }
 .x-axis-label{
   position: relative;
-  bottom: 16px;
+  bottom: 20px;
   left: 70px;
 }
 .columnSelectorX{
   position: relative;
-  top: 12px;
+  top: 7px;
   left: 5px;
 }
 .x-range-label{

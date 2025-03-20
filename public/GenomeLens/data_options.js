@@ -386,8 +386,10 @@ export function addCanvasBarToggle(barId, containerId) {
             window.canvas_states[2].filenames = {};
             window.canvas_states[3].filenames = {};
             
-            // Clear other settings
-            updateURLParameters("xDomain.interval", [0, 200000]);  
+            // Clear URL parameters by replacing current URL with base URL
+            const baseUrl = window.location.href.split('?')[0];
+            window.history.replaceState({}, document.title, baseUrl);
+            
             // Reset canvas states
             for (let i = 1; i <= 3; i++) {
                 window.canvas_states[i] = {
