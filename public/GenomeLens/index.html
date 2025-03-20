@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <title>Gosling Visualization</title>
-    <link rel="stylesheet" href="./GenomeLens/stylesheet.css">
-    <link rel="stylesheet" href="./GenomeLens/track.css">
-    <link rel="stylesheet" href="./GenomeLens/canvas-content.css">
+    <link rel="stylesheet" href="./GenomeLens/assets/css/stylesheet.css">
+    <link rel="stylesheet" href="./GenomeLens/assets/css/track.css">
+    <link rel="stylesheet" href="./GenomeLens/assets/css/canvas-content.css">
     <link rel="stylesheet" href="https://esm.sh/higlass@1.13/dist/hglib.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="importmap">
@@ -44,18 +44,17 @@
 </head>
 <body>
     <div class="container">
-        <div id="overlay"></div> 
         <div id="buttons" class="all_buttons"></div>
     
         <!-- Add footer with logos -->
         <div class="footer">
             <div class="footer-logos">
-                <img src="./logos/UU_logo_color.png" alt="Uppsala University logo">
-                <img src="./logos/umu-logo-left-neg-SE.png" alt="Umeå University logo">
-                <img src="./logos/SciLifeLab_Logotype_Green_POS.png" alt="SciLifeLab logo">
-                <img src="./logos/lnu_wordmark_symbol_rgb.png" alt="Linnaeus University logo">
-                <img src="./logos/SU_logotyp_Portrait_800px.png" alt="Stockholm University logo">
-                <img src="./logos/infravis_1920x1080.png" alt="InfraVis logo">
+                <img src="../GenomeLens/assets/logos/UU_logo_color.png" alt="Uppsala University logo">
+                <img src="../GenomeLens/assets//logos/umu-logo-left-neg-SE.png" alt="Umeå University logo">
+                <img src="../GenomeLens/assets//logos/SciLifeLab_Logotype_Green_POS.png" alt="SciLifeLab logo">
+                <img src="../GenomeLens/assets//logos/lnu_wordmark_symbol_rgb.png" alt="Linnaeus University logo">
+                <img src="../GenomeLens/assets//logos/SU_logotyp_Portrait_800px.png" alt="Stockholm University logo">
+                <img src="../GenomeLens/assets//logos/infravis_1920x1080.png" alt="InfraVis logo">
 
             </div>
         </div>
@@ -65,9 +64,7 @@
     <script type="module">
         import { PlotSpecManager } from './GenomeLens/PlotSpecManager.js';         
         import { all_buttons } from './GenomeLens/data_options.js';
-        import { overlay } from './GenomeLens/overlay.js';
 
-        const overlay_container = document.getElementById('overlay');
         const buttons_container = document.getElementById('buttons');
 
         import { URLfromFile, URLfromServer, GoslingPlotWithLocalData } from './GenomeLens/plot.js';
@@ -76,7 +73,6 @@
 
 
         document.addEventListener('DOMContentLoaded', async function () { 
-            await overlay(overlay_container);
             await all_buttons(buttons_container);
             await generateTracks();
         });
