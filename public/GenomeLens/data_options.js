@@ -4,9 +4,9 @@
  * @returns {Promise<void>} - A Promise that resolves after the container is populated.
  */
 
-import { GoslingPlotWithLocalData, getCurrentViewSpec } from './plot.js';
-import { updateURLParameters } from './update_plot_specifications.js';
-import {exportingFigures} from './exporting_functionality.js';
+import { GoslingPlotWithLocalData, getCurrentViewSpec } from './plot.js'
+import { updateURLParameters } from './update_plot_specifications.js'
+import {exportingFigures} from './exporting_functionality.js'
 import {generateTracks} from './track.js'
 
 /**
@@ -33,8 +33,8 @@ import {generateTracks} from './track.js'
  * - Display states for various UI elements
  * 
  * @example
- * const container = document.getElementById('main-container');
- * await all_buttons(container);
+ * const container = document.getElementById('main-container')
+ * await all_buttons(container)
  */
 export async function all_buttons(container) {
     container.innerHTML = `
@@ -47,7 +47,7 @@ export async function all_buttons(container) {
                 <button id="canvas3" class="canvas-button">Canvas 3</button>
                 <button  add-canvas-tooltip="This button is to add a new canvas up to 3" id="add_canvas" aria-label="Close"> <i class="fa fa-plus"></i></button>
             </div>  
-            <div id="notification" style="display: none; color:white;border-radius: 5px ; padding: 10px; opacity:0.7; margin-top: 10px; position: absolute; top: 60px; left: 23%; transform: translateX(-50%); z-index: 1000;"></div>   
+            <div id="notification" style="display: none color:whiteborder-radius: 5px  padding: 10px opacity:0.7 margin-top: 10px position: absolute top: 60px left: 23% transform: translateX(-50%) z-index: 1000"></div>   
             <div id="header" class="buttons-container">   
                 <select id="export-dropdown" class="dropdown-content">
                     <option value="" disabled selected>Export as</option>
@@ -57,7 +57,7 @@ export async function all_buttons(container) {
                     <h2 class='canvas_number'>Annotation</h2>
                     <h2>Track Controls</h2>
                     <span id="clear_url_button" class="clear_all_settings"><u>  Clear All </u></span>                   
-                    <button id='add_track_button' class="add_track_button"><i class="fa fa-plus-circle" style="font-size:24px;"></i>Add Track</button>
+                    <button id='add_track_button' class="add_track_button"><i class="fa fa-plus-circle" style="font-size:24px"></i>Add Track</button>
                     <label for="trackCountSelector"></label>
                     <select id="trackCountSelector" class='trackCountSelector' onchange="generateTracks()">
                         <option value="1" selected>1 Track</option>
@@ -81,8 +81,8 @@ export async function all_buttons(container) {
         <div class="right-section">
             <div class='bars'> 
                 <button view-tooltip="This could be used to compare different canvases with different settings by adding a second view where each view is loaded with its own files or settings" id='view1-btn' class='view-btn'> View A </button>
-                <button id='view2-btn' class='view-btn' style='display:none;'> View B </button>
-                <button id='view3-btn' class='view-btn' style='display:none;'> View C </button>
+                <button id='view2-btn' class='view-btn' style='display:none'> View B </button>
+                <button id='view3-btn' class='view-btn' style='display:none'> View C </button>
                 <button id="add_view" aria-label="Close"> <i class="fa fa-plus"></i></button>
             </div>
             ${generateViewControl(window.currentView)}
@@ -90,220 +90,202 @@ export async function all_buttons(container) {
 
         </div>
     </div>
-    `;
+    `
     
-    // Hide add track button and track selector for annotation on initial load
     if (window.canvas_num === 0) {
-        document.getElementById('add_track_button').style.display = 'none';
-        document.getElementById('trackCountSelector').style.display = 'none';
+        document.getElementById('add_track_button').style.display = 'none'
+        document.getElementById('trackCountSelector').style.display = 'none'
     }
     
-    const canvas0 = document.getElementById('canvas0');
-    const canvas1 = document.getElementById('canvas1');
-    const canvas2 = document.getElementById('canvas2');
-    const canvas3 = document.getElementById('canvas3');
-    const view_control = document.querySelector('.view-control');
-    const canvas_number = document.querySelector('.canvas_number');
-    const add_canvas = document.getElementById('add_canvas');
-    const add_view = document.getElementById('add_view');
-    const view1_btn = document.getElementById('view1-btn');
-    const view2_btn = document.getElementById('view2-btn');
-    const view3_btn = document.getElementById('view3-btn');
+    const canvas0 = document.getElementById('canvas0')
+    const canvas1 = document.getElementById('canvas1')
+    const canvas2 = document.getElementById('canvas2')
+    const canvas3 = document.getElementById('canvas3')
+    const view_control = document.querySelector('.view-control')
+    const canvas_number = document.querySelector('.canvas_number')
+    const add_canvas = document.getElementById('add_canvas')
+    const add_view = document.getElementById('add_view')
+    const view1_btn = document.getElementById('view1-btn')
+    const view2_btn = document.getElementById('view2-btn')
+    const view3_btn = document.getElementById('view3-btn')
     const current_canvas = document.querySelector('.current-canvas')
-    //Adding views functionality
-    document.querySelector('.canvas-container').style.display = 'none';
+    document.querySelector('.canvas-container').style.display = 'none'
     
     add_view.addEventListener('click', function(){
         if(currentView === 1) {                       
-            view2_btn.style.display = 'block';
+            view2_btn.style.display = 'block'
             window.currentView = 2
             view_control.innerHTML = 'View Controls B'
-            updateViewSettings(2);
-            setActiveViews(view2_btn);
+            updateViewSettings(2)
+            setActiveViews(view2_btn)
         } else if(currentView === 2) {
             view_control.innerHTML = 'View Controls C'
-            view3_btn.style.display = 'block';
+            view3_btn.style.display = 'block'
             window.currentView = 3
-            updateViewSettings(3);
-            setActiveViews(view3_btn);
-            this.style.cursor = 'not-allowed';
-            this.disabled = true;
+            updateViewSettings(3)
+            setActiveViews(view3_btn)
+            this.style.cursor = 'not-allowed'
+            this.disabled = true
         }    
     })
-    // Set Canvas 0 as active by default
-    canvas0.classList.add('active');
-    view1_btn.classList.add('active');
-    // Adding canvases
+    canvas0.classList.add('active')
+    view1_btn.classList.add('active')
     add_canvas.addEventListener('click', function () {
         if (displayed_canvas === 0) {
-            canvas2.style.display = 'block';
-            displayed_canvas = 1;
-            window.canvas_num = 1;
-            canvas_number.innerHTML = 'Canvas 1';
+            canvas2.style.display = 'block'
+            displayed_canvas = 1
+            window.canvas_num = 1
+            canvas_number.innerHTML = 'Canvas 1'
             current_canvas.innerHTML = 'Current Canvas 1'
             if (!window.object_1_created) {
-                addOrUpdateCanvasObject('canvas1');
-                window.object_1_created = true;
-                view2_btn.style.display = 'block';
+                addOrUpdateCanvasObject('canvas1')
+                window.object_1_created = true
+                view2_btn.style.display = 'block'
                 window.currentView = 1
                 view_control.innerHTML = 'View Controls A'
-                updateViewSettings(1);
-                setActiveViews(view1_btn);
+                updateViewSettings(1)
+                setActiveViews(view1_btn)
             }
-            setActiveCanvas(canvas1);
-            updateCanvasUI();
+            setActiveCanvas(canvas1)
+            updateCanvasUI()
         }
         if (displayed_canvas === 1) {
-            canvas2.style.display = 'block';
-            displayed_canvas = 2;
-            window.canvas_num = 2;
-            canvas_number.innerHTML = 'Canvas 2';
+            canvas2.style.display = 'block'
+            displayed_canvas = 2
+            window.canvas_num = 2
+            canvas_number.innerHTML = 'Canvas 2'
             current_canvas.innerHTML = 'Current Canvas 2'
             if (!window.object_2_created) {
-                addOrUpdateCanvasObject('canvas2');
-                window.object_2_created = true;
+                addOrUpdateCanvasObject('canvas2')
+                window.object_2_created = true
             }
-            setActiveCanvas(canvas2);
-            updateCanvasUI();
+            setActiveCanvas(canvas2)
+            updateCanvasUI()
         }
-        // if there is already canvas 2
         else if (displayed_canvas === 2) {
-            canvas3.style.display = 'block';
-            window.canvas_num = 3;
-            displayed_canvas = 3;
-            canvas_number.innerHTML = 'Canvas 3';
+            canvas3.style.display = 'block'
+            window.canvas_num = 3
+            displayed_canvas = 3
+            canvas_number.innerHTML = 'Canvas 3'
             current_canvas.innerHTML = 'Current Canvas 3'
             if (!window.object_3_created) {
-                addOrUpdateCanvasObject('canvas3');
+                addOrUpdateCanvasObject('canvas3')
                 window.object_3_created = true
             }
-            updateCanvasUI();
-            setActiveCanvas(canvas3);
-            this.style.cursor = 'not-allowed';
-            this.disabled = true;
+            updateCanvasUI()
+            setActiveCanvas(canvas3)
+            this.style.cursor = 'not-allowed'
+            this.disabled = true
         }
     })
 
     canvas0.addEventListener('click', function () {
-        setActiveCanvas(canvas0);
-        window.canvas_num = 0;
-        canvas_number.innerHTML = 'Gene Canvas';
-        current_canvas.innerHTML = 'Current Canvas Gene';
+        setActiveCanvas(canvas0)
+        window.canvas_num = 0
+        canvas_number.innerHTML = 'Gene Canvas'
+        current_canvas.innerHTML = 'Current Canvas Gene'
         
-        // Hide add track button and track selector for annotation
-        document.getElementById('add_track_button').style.display = 'none';
-        document.getElementById('trackCountSelector').style.display = 'none';
+        document.getElementById('add_track_button').style.display = 'none'
+        document.getElementById('trackCountSelector').style.display = 'none'
     
-        // Restore chromosome selector and trigger rerender
-        const chromosomeData = window.canvas_states[0].chromosomeData;
+        const chromosomeData = window.canvas_states[0].chromosomeData
         if (chromosomeData) {
-            const chromosomeSelect = document.getElementById('chromosomeSelect');
+            const chromosomeSelect = document.getElementById('chromosomeSelect')
             if (chromosomeSelect) {
-                // Restore dropdown options
-                updateChromosomeSelect(chromosomeData.options, chromosomeSelect);
+                updateChromosomeSelect(chromosomeData.options, chromosomeSelect)
                 
-                // Get last selected chromosome
-                const lastSelection = localStorage.getItem('lastChromosomeSelection');
+                const lastSelection = localStorage.getItem('lastChromosomeSelection')
                 if (lastSelection && chromosomeData.options[lastSelection]) {
-                    chromosomeSelect.value = lastSelection;
-                    // Force rerender with stored chromosome
-                    const maxPosition = chromosomeData.options[lastSelection];
+                    chromosomeSelect.value = lastSelection
+                    const maxPosition = chromosomeData.options[lastSelection]
                     updateChromosomeView(lastSelection, maxPosition)
                         .then(() => {
-                            console.log('Successfully restored chromosome view');
+                            console.log('Successfully restored chromosome view')
                         })
                         .catch(error => {
-                            console.error('Error restoring chromosome view:', error);
-                        });
+                            console.error('Error restoring chromosome view:', error)
+                        })
                 }
             }
         }
     
-        document.querySelector('.canvas-container').style.display = 'none';
-        updateCanvasUI();
-    });
-    // Making canvas1 active
+        document.querySelector('.canvas-container').style.display = 'none'
+        updateCanvasUI()
+    })
     canvas1.addEventListener('click', function () {
-        setActiveCanvas(canvas1);
-        window.canvas_num = 1;
-        canvas_number.innerHTML = 'Canvas 1';
-        current_canvas.innerHTML = 'Current Canvas 1';
+        setActiveCanvas(canvas1)
+        window.canvas_num = 1
+        canvas_number.innerHTML = 'Canvas 1'
+        current_canvas.innerHTML = 'Current Canvas 1'
         
-        // Show add track button and track selector for regular canvas
-        document.getElementById('add_track_button').style.display = 'block';
-        document.getElementById('trackCountSelector').style.display = 'block';
+        document.getElementById('add_track_button').style.display = 'block'
+        document.getElementById('trackCountSelector').style.display = 'block'
         
         if (!window.object_1_created) {
-            addOrUpdateCanvasObject('canvas1');
-            window.object_1_created = true;
+            addOrUpdateCanvasObject('canvas1')
+            window.object_1_created = true
         }
-        document.querySelector('.canvas-container').style.display = 'block';
+        document.querySelector('.canvas-container').style.display = 'block'
 
-        updateCanvasUI();
-    });
-    // Making canvas2 active
+        updateCanvasUI()
+    })
     canvas2.addEventListener('click', function () {
-        setActiveCanvas(canvas2);
-        window.canvas_num = 2;
-        canvas_number.innerHTML = 'Canvas 2';
-        current_canvas.innerHTML = 'Current Canvas 2';
+        setActiveCanvas(canvas2)
+        window.canvas_num = 2
+        canvas_number.innerHTML = 'Canvas 2'
+        current_canvas.innerHTML = 'Current Canvas 2'
         
-        // Show add track button and track selector for regular canvas
-        document.getElementById('add_track_button').style.display = 'block';
-        document.getElementById('trackCountSelector').style.display = 'block';
+        document.getElementById('add_track_button').style.display = 'block'
+        document.getElementById('trackCountSelector').style.display = 'block'
         
         if (!window.object_2_created) {
-            addOrUpdateCanvasObject('canvas2');
-            window.object_2_created = true;
+            addOrUpdateCanvasObject('canvas2')
+            window.object_2_created = true
         }
-        document.querySelector('.canvas-container').style.display = 'block';
+        document.querySelector('.canvas-container').style.display = 'block'
 
-        updateCanvasUI();
-    });
-    // Making canvas3 active
+        updateCanvasUI()
+    })
     canvas3.addEventListener('click', function () {
-        setActiveCanvas(canvas3);
-        window.canvas_num = 3;
-        canvas_number.innerHTML = 'Canvas 3';
-        current_canvas.innerHTML = 'Current Canvas 3';
+        setActiveCanvas(canvas3)
+        window.canvas_num = 3
+        canvas_number.innerHTML = 'Canvas 3'
+        current_canvas.innerHTML = 'Current Canvas 3'
         
-        // Show add track button and track selector for regular canvas
-        document.getElementById('add_track_button').style.display = 'block';
-        document.getElementById('trackCountSelector').style.display = 'block';
+        document.getElementById('add_track_button').style.display = 'block'
+        document.getElementById('trackCountSelector').style.display = 'block'
         
         if (!window.object_3_created) {
-            addOrUpdateCanvasObject('canvas3');
-            window.object_3_created = true;
+            addOrUpdateCanvasObject('canvas3')
+            window.object_3_created = true
         }
-        document.querySelector('.canvas-container').style.display = 'block';
+        document.querySelector('.canvas-container').style.display = 'block'
 
-        updateCanvasUI();
-    });
+        updateCanvasUI()
+    })
 
-    // Switching between views functionality
     view1_btn.addEventListener('click', async function () {
-        window.currentView = 1;
-        view_control.innerHTML = 'View Controls A';
-        setActiveViews(view1_btn);
-        await loadAndApplyViewSettings(1);
-    });
+        window.currentView = 1
+        view_control.innerHTML = 'View Controls A'
+        setActiveViews(view1_btn)
+        await loadAndApplyViewSettings(1)
+    })
     
     view2_btn.addEventListener('click', async function () {
-        window.currentView = 2;
-        view_control.innerHTML = 'View Controls B';
-        setActiveViews(view2_btn);
-        await loadAndApplyViewSettings(2);
-    });
+        window.currentView = 2
+        view_control.innerHTML = 'View Controls B'
+        setActiveViews(view2_btn)
+        await loadAndApplyViewSettings(2)
+    })
     
     view3_btn.addEventListener('click', async function () {
-        window.currentView = 3;
-        view_control.innerHTML = 'View Controls C';
-        setActiveViews(view3_btn);
-        await loadAndApplyViewSettings(3);
-    });
-    // Add the toggle effect for the initial canvas container
-    addCanvasBarToggle('canvas-bar-1', 'canvas-container-1');
-    exportingFigures();
+        window.currentView = 3
+        view_control.innerHTML = 'View Controls C'
+        setActiveViews(view3_btn)
+        await loadAndApplyViewSettings(3)
+    })
+    addCanvasBarToggle('canvas-bar-1', 'canvas-container-1')
+    exportingFigures()
     view_control_apply_changes()
 }
 
@@ -312,9 +294,9 @@ export async function all_buttons(container) {
  * @param {activeCanvas} activeCanvas 
  */
 export function setActiveCanvas(activeCanvas) {
-    const canvasButtons = document.querySelectorAll('.canvas-button');
-    canvasButtons.forEach(button => button.classList.remove('active'));
-    activeCanvas.classList.add('active');
+    const canvasButtons = document.querySelectorAll('.canvas-button')
+    canvasButtons.forEach(button => button.classList.remove('active'))
+    activeCanvas.classList.add('active')
 }
 
 /**
@@ -322,22 +304,21 @@ export function setActiveCanvas(activeCanvas) {
  * @param {activeViews} activeViews 
  */
 export function setActiveViews(activeViews) {
-    const viewButtons = document.querySelectorAll('.view-btn');
-    viewButtons.forEach(button => button.classList.remove('active'));
-    activeViews.classList.add('active');
+    const viewButtons = document.querySelectorAll('.view-btn')
+    viewButtons.forEach(button => button.classList.remove('active'))
+    activeViews.classList.add('active')
 }
 /**
  * To update the UI after each change.
  */
 export function updateCanvasUI() {
-    const currentCanvasState = window.canvas_states[window.canvas_num];
-    document.getElementById('trackCountSelector').value = currentCanvasState.trackCount;
-    generateTracks();
+    const currentCanvasState = window.canvas_states[window.canvas_num]
+    document.getElementById('trackCountSelector').value = currentCanvasState.trackCount
+    generateTracks()
 }
-// Add or update a canvas object with the given ID
 export function addOrUpdateCanvasObject(canvasId) {
-    const canvas_container = document.createElement('div');
-    canvas_container.id = `canvas-container-${canvasId}-${currentView}`;
+    const canvas_container = document.createElement('div')
+    canvas_container.id = `canvas-container-${canvasId}-${currentView}`
     const newCanvasObject = {
         id: canvasId,
         title: `Canvas ${canvasId.slice(-1)}`,
@@ -349,8 +330,8 @@ export function addOrUpdateCanvasObject(canvasId) {
         assembly: "unknown",
         linkingId: "detail",
         style: {
-            background: "#FFFFFF",  // Changed from #D3D3D3 to #FFFFFF
-            backgroundOpacity: 1,   // Changed from 0.1 to 1 for solid white
+            background: "#D3D3D3",
+            backgroundOpacity: 0.1,
         },
         tracks: [
             window.plotSpecManager.createTrack(),
@@ -359,35 +340,33 @@ export function addOrUpdateCanvasObject(canvasId) {
             window.plotSpecManager.createTrack(),
             window.plotSpecManager.createTrack(),
         ],
-    };
+    }
     
-    window.plotSpecManager.generateCanvas(canvasId, newCanvasObject);
+    window.plotSpecManager.generateCanvas(canvasId, newCanvasObject)
 }
-// the toggle effect for the canvas bar
 export function addCanvasBarToggle(barId, containerId) {
-    const canvasBar = document.getElementById(barId);
-    const canvasContainer = document.getElementById(containerId);
+    const canvasBar = document.getElementById(barId)
+    const canvasContainer = document.getElementById(containerId)
     if (canvasBar && canvasContainer) {
         canvasBar.addEventListener('click', () => {
-            const canvasContent = canvasContainer.querySelector('.canvas_content');
+            const canvasContent = canvasContainer.querySelector('.canvas_content')
          
             if (canvasContent) {
-                canvasContent.classList.toggle('hidden');
+                canvasContent.classList.toggle('hidden')
             }
-        });
+        })
     }
-    // Add event listener to the clear all settings button
-    const clearAllSettingsButton = document.querySelector('#clear_url_button');
+    const clearAllSettingsButton = document.querySelector('#clear_url_button')
     if (clearAllSettingsButton) {
         clearAllSettingsButton.addEventListener('click', () => {
-            window.canvas_states[1].filenames = {};
-            window.canvas_states[2].filenames = {};
-            window.canvas_states[3].filenames = {};
+            window.canvas_states[1].filenames = {}
+            window.canvas_states[2].filenames = {}
+            window.canvas_states[3].filenames = {}
             
-            const baseUrl = window.location.href.split('?')[0];
-            window.history.replaceState({}, document.title, baseUrl);
+            const baseUrl = window.location.href.split('?')[0]
+            window.history.replaceState({}, document.title, baseUrl)
             
-            for (let i = 1; i <= 3; i++) {
+            for (let i = 1 ;i <= 3 ;i++) {
                 window.canvas_states[i] = {
                     trackCount: 1,
                     tracks: [],
@@ -399,10 +378,10 @@ export function addCanvasBarToggle(barId, containerId) {
                         right_y_axis: '',
                         right_y_range: [0, 1]
                     }
-                };
+                }
             }     
-            location.reload();
-        });
+            location.reload()
+        })
     }
 }
 /**
@@ -410,56 +389,50 @@ export function addCanvasBarToggle(barId, containerId) {
  * @param {view} view 
  */
 export function updateViewSettings(view) {
-    resetViewSettings();  // Reset fields before loading new settings
-    const settings = window.canvas_states[view].view_control_settings;
-    // Update X-axis
-    document.getElementById('x_range_start').value = settings.x_range[0] || '';
-    document.getElementById('x_range_end').value = settings.x_range[1] || '';
-    document.getElementById('columnSelectorX_0').value = settings.x_axis || '';
+    resetViewSettings()
+    const settings = window.canvas_states[view].view_control_settings
+    document.getElementById('x_range_start').value = settings.x_range[0] || ''
+    document.getElementById('x_range_end').value = settings.x_range[1] || ''
+    document.getElementById('columnSelectorX_0').value = settings.x_axis || ''
 
-    // Update Left Y-axis
-    document.getElementById('y_start_left').value = settings.left_y_range[0] || '';
-    document.getElementById('y_end_left').value = settings.left_y_range[1] || '';
-    document.getElementById('columnSelectorYLeft').value = settings.left_y_axis || '';
+    document.getElementById('y_start_left').value = settings.left_y_range[0] || ''
+    document.getElementById('y_end_left').value = settings.left_y_range[1] || ''
+    document.getElementById('columnSelectorYLeft').value = settings.left_y_axis || ''
 
-    // Update Right Y-axis
-    document.getElementById('y_start_right').value = settings.right_y_range[0] || '';
-    document.getElementById('y_end_right').value = settings.right_y_range[1] || '';
-    document.getElementById('columnSelectorYRight').value = settings.right_y_axis || '';
+    document.getElementById('y_start_right').value = settings.right_y_range[0] || ''
+    document.getElementById('y_end_right').value = settings.right_y_range[1] || ''
+    document.getElementById('columnSelectorYRight').value = settings.right_y_axis || ''
 
-    // Restore checked boxes for left axis
-    const leftCheckboxes = document.querySelectorAll('#checkbox-left-axis input[type="checkbox"]');
+    const leftCheckboxes = document.querySelectorAll('#checkbox-left-axis input[type="checkbox"]')
     leftCheckboxes.forEach(checkbox => {
-        checkbox.checked = settings.checked_left.includes(checkbox.id);
-    });
+        checkbox.checked = settings.checked_left.includes(checkbox.id)
+    })
 
-    // Restore checked boxes for right axis
-    const rightCheckboxes = document.querySelectorAll('#checkbox-right-axis input[type="checkbox"]');
+    const rightCheckboxes = document.querySelectorAll('#checkbox-right-axis input[type="checkbox"]')
     rightCheckboxes.forEach(checkbox => {
-        checkbox.checked = settings.checked_right.includes(checkbox.id);
-    });
+        checkbox.checked = settings.checked_right.includes(checkbox.id)
+    })
 
 }
 
-// Reset all input fields to default or blank
 export function resetViewSettings() {
-    document.getElementById('x_range_start').value = '';
-    document.getElementById('x_range_end').value = '';
-    document.getElementById('columnSelectorX_0').value = '';
+    document.getElementById('x_range_start').value = ''
+    document.getElementById('x_range_end').value = ''
+    document.getElementById('columnSelectorX_0').value = ''
 
-    document.getElementById('y_start_left').value = '';
-    document.getElementById('y_end_left').value = '';
-    document.getElementById('columnSelectorYLeft').value = '';
+    document.getElementById('y_start_left').value = ''
+    document.getElementById('y_end_left').value = ''
+    document.getElementById('columnSelectorYLeft').value = ''
 
-    document.getElementById('y_start_right').value = '';
-    document.getElementById('y_end_right').value = '';
-    document.getElementById('columnSelectorYRight').value = '';
+    document.getElementById('y_start_right').value = ''
+    document.getElementById('y_end_right').value = ''
+    document.getElementById('columnSelectorYRight').value = ''
 
-    const leftCheckboxes = document.querySelectorAll('#checkbox-left-axis input[type="checkbox"]');
-    leftCheckboxes.forEach(checkbox => checkbox.checked = false);
+    const leftCheckboxes = document.querySelectorAll('#checkbox-left-axis input[type="checkbox"]')
+    leftCheckboxes.forEach(checkbox => checkbox.checked = false)
 
-    const rightCheckboxes = document.querySelectorAll('#checkbox-right-axis input[type="checkbox"]');
-    rightCheckboxes.forEach(checkbox => checkbox.checked = false);
+    const rightCheckboxes = document.querySelectorAll('#checkbox-right-axis input[type="checkbox"]')
+    rightCheckboxes.forEach(checkbox => checkbox.checked = false)
 }
 
 /**
@@ -467,69 +440,63 @@ export function resetViewSettings() {
  */
 export function view_control_apply_changes () {
      document.querySelector('.apply-all-button').addEventListener('click', async function () {     
-        const currentView = window.currentView;
-        const currentCanvasState = window.canvas_states[currentView];    
-        // X-axis range
-        const x_start = parseFloat(document.getElementById('x_range_start').value);
-        const x_end = parseFloat(document.getElementById('x_range_end').value);
-        let x_interval = [x_start, x_end];  
+        const currentView = window.currentView
+        const currentCanvasState = window.canvas_states[currentView]    
+        const x_start = parseFloat(document.getElementById('x_range_start').value)
+        const x_end = parseFloat(document.getElementById('x_range_end').value)
+        let x_interval = [x_start, x_end]  
         if(isNaN(x_start) && isNaN(x_end)) {
-            x_interval = [0, 200000];
+            x_interval = [0, 200000]
         }
-        // Left Y-axis range
-        const y_start_left = parseFloat(document.getElementById('y_start_left').value);
-        const y_end_left = parseFloat(document.getElementById('y_end_left').value);
-        let y_interval_left = [y_start_left, y_end_left];
+        const y_start_left = parseFloat(document.getElementById('y_start_left').value)
+        const y_end_left = parseFloat(document.getElementById('y_end_left').value)
+        let y_interval_left = [y_start_left, y_end_left]
         if(isNaN(y_start_left) && isNaN(y_end_left)) {
-            y_interval_left = [0, 1];
+            y_interval_left = [0, 1]
         }
-        // Right Y-axis range
-        const y_start_right = parseFloat(document.getElementById('y_start_right').value);
-        const y_end_right = parseFloat(document.getElementById('y_end_right').value);
-        let y_interval_right = [y_start_right, y_end_right];
+        const y_start_right = parseFloat(document.getElementById('y_start_right').value)
+        const y_end_right = parseFloat(document.getElementById('y_end_right').value)
+        let y_interval_right = [y_start_right, y_end_right]
         if(isNaN(y_start_right) && isNaN(y_end_right)) {
-            y_interval_right = [0, 1];
+            y_interval_right = [0, 1]
         }
-        // Update the current view's settings
-        currentCanvasState.view_control_settings.x_range = x_interval;
-        currentCanvasState.view_control_settings.left_y_range = y_interval_left;
-        currentCanvasState.view_control_settings.right_y_range = y_interval_right;
-        currentCanvasState.view_control_settings.x_axis = document.getElementById('columnSelectorX_0').value;
-        currentCanvasState.view_control_settings.left_y_axis = document.getElementById('columnSelectorYLeft').value;
-        currentCanvasState.view_control_settings.right_y_axis = document.getElementById('columnSelectorYRight').value;
-        // Update plot spec and redraw
-        const plotSpec = getCurrentViewSpec();
-        plotSpec.xDomain.interval = currentCanvasState.view_control_settings.x_range;
-        // To update the checkboxes for left and right.
-        const leftChecked = document.querySelectorAll('#checkbox-left-axis input[type="checkbox"]:checked');
+        currentCanvasState.view_control_settings.x_range = x_interval
+        currentCanvasState.view_control_settings.left_y_range = y_interval_left
+        currentCanvasState.view_control_settings.right_y_range = y_interval_right
+        currentCanvasState.view_control_settings.x_axis = document.getElementById('columnSelectorX_0').value
+        currentCanvasState.view_control_settings.left_y_axis = document.getElementById('columnSelectorYLeft').value
+        currentCanvasState.view_control_settings.right_y_axis = document.getElementById('columnSelectorYRight').value
+        const plotSpec = getCurrentViewSpec()
+        plotSpec.xDomain.interval = currentCanvasState.view_control_settings.x_range
+        const leftChecked = document.querySelectorAll('#checkbox-left-axis input[type="checkbox"]:checked')
         leftChecked.forEach(function (checkbox) {
-            const trackIndex = parseInt(checkbox.value.split(' ')[1]) - 1;
-            plotSpec.tracks[trackIndex].y.domain = currentCanvasState.view_control_settings.left_y_range;
+            const trackIndex = parseInt(checkbox.value.split(' ')[1]) - 1
+            plotSpec.tracks[trackIndex].y.domain = currentCanvasState.view_control_settings.left_y_range
             plotSpec.tracks[trackIndex].y.field = document.getElementById('columnSelectorYLeft').options[currentCanvasState.view_control_settings.left_y_axis].textContent
             plotSpec.tracks[trackIndex].y.axis = 'left'
             plotSpec.tracks[trackIndex].x.field = document.getElementById('columnSelectorX_0').options[currentCanvasState.view_control_settings.x_axis].textContent
-            currentCanvasState.view_control_settings.checked_left = Array.from(leftChecked).map(checkbox => checkbox.id);
-        });
-        const rightChecked = document.querySelectorAll('#checkbox-right-axis input[type="checkbox"]:checked');
+            currentCanvasState.view_control_settings.checked_left = Array.from(leftChecked).map(checkbox => checkbox.id)
+        })
+        const rightChecked = document.querySelectorAll('#checkbox-right-axis input[type="checkbox"]:checked')
         rightChecked.forEach(function (checkbox) {
-            const trackIndex = parseInt(checkbox.value.split(' ')[1]) - 1;
-            plotSpec.tracks[trackIndex].y.domain = currentCanvasState.view_control_settings.right_y_range;
+            const trackIndex = parseInt(checkbox.value.split(' ')[1]) - 1
+            plotSpec.tracks[trackIndex].y.domain = currentCanvasState.view_control_settings.right_y_range
             plotSpec.tracks[trackIndex].y.field = document.getElementById('columnSelectorYRight').options[currentCanvasState.view_control_settings.right_y_axis].textContent
             plotSpec.tracks[trackIndex].y.axis = 'right'
             plotSpec.tracks[trackIndex].x.field = document.getElementById('columnSelectorX_0').options[currentCanvasState.view_control_settings.x_axis].textContent
-            currentCanvasState.view_control_settings.checked_right = Array.from(rightChecked).map(checkbox => checkbox.id);
-        }); 
-        const xRangeSelect = document.getElementById('x_range_select');
-        const xRangeStart = document.getElementById('x_range_start');
-        const xRangeEnd = document.getElementById('x_range_end');
+            currentCanvasState.view_control_settings.checked_right = Array.from(rightChecked).map(checkbox => checkbox.id)
+        }) 
+        const xRangeSelect = document.getElementById('x_range_select')
+        const xRangeStart = document.getElementById('x_range_start')
+        const xRangeEnd = document.getElementById('x_range_end')
         xRangeSelect.addEventListener('change', () => {
-            const selectedOption = xRangeSelect.value;
-            let valueToCopy = '';
+            const selectedOption = xRangeSelect.value
+            let valueToCopy = ''
     
             if (selectedOption === 'start') {
-                valueToCopy = xRangeStart.value;
+                valueToCopy = xRangeStart.value
             } else if (selectedOption === 'end') {
-                valueToCopy = xRangeEnd.value;
+                valueToCopy = xRangeEnd.value
             }
     
             if (valueToCopy) {
@@ -542,26 +509,25 @@ export function view_control_apply_changes () {
                         },2000)
                     })
                     .catch(err => {
-                        console.error('Failed to copy text: ', err);
-                    });
+                        console.error('Failed to copy text: ', err)
+                    })
             }
-        });
-        updateURLParameters("columnSelectorX_0", currentCanvasState.view_control_settings.x_axis);
-        updateURLParameters("columnSelectorYLeft", currentCanvasState.view_control_settings.left_y_axis);
-        updateURLParameters("columnSelectorYRight", currentCanvasState.view_control_settings.right_y_axis);
-        updateURLParameters("xDomain.interval", currentCanvasState.view_control_settings.x_range);
-        updateURLParameters("yDomain.left", currentCanvasState.view_control_settings.left_y_range);
-        updateURLParameters("yDomain.right", currentCanvasState.view_control_settings.right_y_range);
+        })
+        updateURLParameters("columnSelectorX_0", currentCanvasState.view_control_settings.x_axis)
+        updateURLParameters("columnSelectorYLeft", currentCanvasState.view_control_settings.left_y_axis)
+        updateURLParameters("columnSelectorYRight", currentCanvasState.view_control_settings.right_y_axis)
+        updateURLParameters("xDomain.interval", currentCanvasState.view_control_settings.x_range)
+        updateURLParameters("yDomain.left", currentCanvasState.view_control_settings.left_y_range)
+        updateURLParameters("yDomain.right", currentCanvasState.view_control_settings.right_y_range)
 
-        // Update canvas title based on selected columns
         updateCanvasTitle(plotSpec, {
             xAxis: document.getElementById('columnSelectorX_0').options[currentCanvasState.view_control_settings.x_axis].textContent,
             leftYAxis: document.getElementById('columnSelectorYLeft').options[currentCanvasState.view_control_settings.left_y_axis].textContent,
             rightYAxis: document.getElementById('columnSelectorYRight').options[currentCanvasState.view_control_settings.right_y_axis].textContent
-        });
+        })
 
-        await GoslingPlotWithLocalData();
-    });
+        await GoslingPlotWithLocalData()
+    })
 }
 
 /**
@@ -571,25 +537,22 @@ export function view_control_apply_changes () {
  */
 function updateCanvasTitle(plotSpec, columns) {
     if (window.canvas_num === 0) {
-        return; 
+        return
     }
 
-    let title = `X: ${columns.xAxis} | `;
+    let title = `X: ${columns.xAxis} | `
     
-    // Add left Y-axis columns
-    const leftChecked = document.querySelectorAll('#checkbox-left-axis input[type="checkbox"]:checked');
+    const leftChecked = document.querySelectorAll('#checkbox-left-axis input[type="checkbox"]:checked')
     if (leftChecked.length > 0) {
-        title += `Left Y: ${columns.leftYAxis}`;
+        title += `Left Y: ${columns.leftYAxis}`
     }
 
-    // Add right Y-axis columns
-    const rightChecked = document.querySelectorAll('#checkbox-right-axis input[type="checkbox"]:checked');
+    const rightChecked = document.querySelectorAll('#checkbox-right-axis input[type="checkbox"]:checked')
     if (rightChecked.length > 0) {
-        title += ` | Right Y: ${columns.rightYAxis}`;
+        title += ` | Right Y: ${columns.rightYAxis}`
     }
 
-    // Update the plot specification title
-    plotSpec.title = title;
+    plotSpec.title = title
 }
 
 /**
@@ -701,76 +664,69 @@ export function generateViewControl(currentView){
 }
 
 async function loadAndApplyViewSettings(view) {
-    // First update the UI controls
-    updateViewSettings(view);
+    updateViewSettings(view)
     
-    const currentCanvasState = window.canvas_states[view];
-    const plotSpec = getCurrentViewSpec();
+    const currentCanvasState = window.canvas_states[view]
+    const plotSpec = getCurrentViewSpec()
 
-    // Apply X-axis settings
-    plotSpec.xDomain.interval = currentCanvasState.view_control_settings.x_range;
+    plotSpec.xDomain.interval = currentCanvasState.view_control_settings.x_range
 
-    // Process left axis checkboxes
-    const leftChecked = document.querySelectorAll('#checkbox-left-axis input[type="checkbox"]:checked');
+    const leftChecked = document.querySelectorAll('#checkbox-left-axis input[type="checkbox"]:checked')
     leftChecked.forEach(function (checkbox) {
-        const trackIndex = parseInt(checkbox.value.split(' ')[1]) - 1;
+        const trackIndex = parseInt(checkbox.value.split(' ')[1]) - 1
         if (plotSpec.tracks[trackIndex]) {
-            const leftSelector = document.getElementById('columnSelectorYLeft');
+            const leftSelector = document.getElementById('columnSelectorYLeft')
             if (leftSelector && leftSelector.options[currentCanvasState.view_control_settings.left_y_axis]) {
-                const fieldName = leftSelector.options[currentCanvasState.view_control_settings.left_y_axis].textContent;
+                const fieldName = leftSelector.options[currentCanvasState.view_control_settings.left_y_axis].textContent
                 
-                // Update both data value and y field
-                plotSpec.tracks[trackIndex].data.value = fieldName;
+                plotSpec.tracks[trackIndex].data.value = fieldName
                 plotSpec.tracks[trackIndex].y = {
                     field: fieldName,
                     type: 'quantitative',
                     axis: 'left',
                     domain: currentCanvasState.view_control_settings.left_y_range
-                };
+                }
             }
             
-            const xSelector = document.getElementById('columnSelectorX_0');
+            const xSelector = document.getElementById('columnSelectorX_0')
             if (xSelector && xSelector.options[currentCanvasState.view_control_settings.x_axis]) {
-                const fieldName = xSelector.options[currentCanvasState.view_control_settings.x_axis].textContent;
-                plotSpec.tracks[trackIndex].x.field = fieldName;
+                const fieldName = xSelector.options[currentCanvasState.view_control_settings.x_axis].textContent
+                plotSpec.tracks[trackIndex].x.field = fieldName
             }
         }
-    });
+    })
 
-    // Process right axis checkboxes
-    const rightChecked = document.querySelectorAll('#checkbox-right-axis input[type="checkbox"]:checked');
+    const rightChecked = document.querySelectorAll('#checkbox-right-axis input[type="checkbox"]:checked')
     rightChecked.forEach(function (checkbox) {
-        const trackIndex = parseInt(checkbox.value.split(' ')[1]) - 1;
+        const trackIndex = parseInt(checkbox.value.split(' ')[1]) - 1
         if (plotSpec.tracks[trackIndex]) {
-            plotSpec.tracks[trackIndex].y.domain = currentCanvasState.view_control_settings.right_y_range;
-            const rightSelector = document.getElementById('columnSelectorYRight');
+            plotSpec.tracks[trackIndex].y.domain = currentCanvasState.view_control_settings.right_y_range
+            const rightSelector = document.getElementById('columnSelectorYRight')
             if (rightSelector && rightSelector.options[currentCanvasState.view_control_settings.right_y_axis]) {
-                const fieldName = rightSelector.options[currentCanvasState.view_control_settings.right_y_axis].textContent;
-                plotSpec.tracks[trackIndex].y.field = fieldName;
+                const fieldName = rightSelector.options[currentCanvasState.view_control_settings.right_y_axis].textContent
+                plotSpec.tracks[trackIndex].y.field = fieldName
             }
-            plotSpec.tracks[trackIndex].y.axis = 'right';
+            plotSpec.tracks[trackIndex].y.axis = 'right'
             
-            const xSelector = document.getElementById('columnSelectorX_0');
+            const xSelector = document.getElementById('columnSelectorX_0')
             if (xSelector && xSelector.options[currentCanvasState.view_control_settings.x_axis]) {
-                const fieldName = xSelector.options[currentCanvasState.view_control_settings.x_axis].textContent;
-                plotSpec.tracks[trackIndex].x.field = fieldName;
+                const fieldName = xSelector.options[currentCanvasState.view_control_settings.x_axis].textContent
+                plotSpec.tracks[trackIndex].x.field = fieldName
             }
         }
-    });
+    })
 
-    // Update title when loading view settings
-    const xSelector = document.getElementById('columnSelectorX_0');
-    const leftSelector = document.getElementById('columnSelectorYLeft');
-    const rightSelector = document.getElementById('columnSelectorYRight');
+    const xSelector = document.getElementById('columnSelectorX_0')
+    const leftSelector = document.getElementById('columnSelectorYLeft')
+    const rightSelector = document.getElementById('columnSelectorYRight')
 
     if (xSelector && leftSelector && rightSelector) {
         updateCanvasTitle(plotSpec, {
             xAxis: xSelector.options[currentCanvasState.view_control_settings.x_axis]?.textContent || '',
             leftYAxis: leftSelector.options[currentCanvasState.view_control_settings.left_y_axis]?.textContent || '',
             rightYAxis: rightSelector.options[currentCanvasState.view_control_settings.right_y_axis]?.textContent || ''
-        });
+        })
     }
 
-    // Update plot
-    await GoslingPlotWithLocalData();
+    await GoslingPlotWithLocalData()
 }

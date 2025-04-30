@@ -4,8 +4,8 @@
  * @module PlotSpecManager
  */
 
-import { trackTemplate } from './track_spec.js';
-import { gene_template } from './gene_spec.js';
+import { trackTemplate } from './track_spec.js'
+import { gene_template } from './gene_spec.js'
 
 /**
  * Deep copies an object without reference links
@@ -14,21 +14,21 @@ import { gene_template } from './gene_spec.js';
  */
 function deepCopy(obj) {
   if (typeof obj !== 'object' || obj === null) {
-    return obj;
+    return obj
   }
 
   if (Array.isArray(obj)) {
-    return obj.map(deepCopy);
+    return obj.map(deepCopy)
   }
 
-  const copied = {};
+  const copied = {}
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      copied[key] = deepCopy(obj[key]);
+      copied[key] = deepCopy(obj[key])
     }
   }
 
-  return copied;
+  return copied
 }
 
 /**
@@ -41,11 +41,11 @@ class PlotSpecManager {
    * @constructor
    */
   constructor() {
-    this.assemblyInfo = [["", 0]];
-    this.currentChromosome = null;
+    this.assemblyInfo = [["", 0]]
+    this.currentChromosome = null
     this.plotSpecs = {
       1: this.createNewPlotSpec(),
-    };
+    }
   }
 
   /**
@@ -58,33 +58,30 @@ class PlotSpecManager {
 
     
     if (seqid && length) {
-        this.assemblyInfo = [[seqid, length]];
-        this.currentChromosome = seqid;
+        this.assemblyInfo = [[seqid, length]]
+        this.currentChromosome = seqid
         
-        // Store assembly info globally
         window.currentAssemblyInfo = {
             seqid: seqid,
             length: length
-        };
+        }
         
-        // Update views with new assembly info
         if (this.plotSpecs[1].views && this.plotSpecs[1].views.length > 0) {
-            this.plotSpecs[1].views[0].assembly = this.assemblyInfo;
-            this.plotSpecs[1].views[0].title = this.getChromosomeTitle(seqid);
+            this.plotSpecs[1].views[0].assembly = this.assemblyInfo
+            this.plotSpecs[1].views[0].title = this.getChromosomeTitle(seqid)
             
-            // Update xDomain
             this.plotSpecs[1].views[0].xDomain = {
                 chromosome: seqid,
                 interval: [0, length]
-            };
+            }
         }
 
         try {
-            localStorage.setItem('gosling-assembly-info', JSON.stringify(this.assemblyInfo));
-            localStorage.setItem('current-chromosome', seqid);
-            localStorage.setItem('chromosome-length', length.toString());
+            localStorage.setItem('gosling-assembly-info', JSON.stringify(this.assemblyInfo))
+            localStorage.setItem('current-chromosome', seqid)
+            localStorage.setItem('chromosome-length', length.toString())
         } catch (e) {
-            console.warn('Failed to save assembly info to localStorage:', e);
+            console.warn('Failed to save assembly info to localStorage:', e)
         }
       }
     }
@@ -94,51 +91,48 @@ class PlotSpecManager {
     if (window.canvas_num === 0) {
       
     
-    const isChromosomeName = /^(chr)?([0-9]+|[XY]|MT)$/i.test(seqid);
+    const isChromosomeName = /^(chr)?([0-9]+|[XY]|MT)$/i.test(seqid)
     if (isChromosomeName) {
-      return `Gene Annotations - Chromosome ${seqid}`;
+      return `Gene Annotations - Chromosome ${seqid}`
     } else {
-      return `Gene Annotations - ID: ${seqid}`;
+      return `Gene Annotations - ID: ${seqid}`
     }
   }
   }
 
   getPlotSpec() {
-    return this.plotSpecs[1];
+    return this.plotSpecs[1]
   }
 
   getPlotSpecViewById(viewId) {
-    const plotSpec = this.getPlotSpec();
-    return plotSpec.views.find(view => view.id === viewId);
+    const plotSpec = this.getPlotSpec()
+    return plotSpec.views.find(view => view.id === viewId)
   }
 
   updateAssemblyInfo(seqid, length) {
     if (seqid && length) {
-      this.assemblyInfo = [[seqid, length]];
+      this.assemblyInfo = [[seqid, length]]
       
-      // Update existing plot specs with new assembly info
       if (this.plotSpecs[1].views && this.plotSpecs[1].views.length > 0) {
-        this.plotSpecs[1].views[0].assembly = this.assemblyInfo;
+        this.plotSpecs[1].views[0].assembly = this.assemblyInfo
       }
 
-      // Store in local storage for persistence
       try {
-        localStorage.setItem('gosling-assembly-info', JSON.stringify(this.assemblyInfo));
+        localStorage.setItem('gosling-assembly-info', JSON.stringify(this.assemblyInfo))
       } catch (e) {
-        console.warn('Failed to store assembly info in localStorage:', e);
+        console.warn('Failed to store assembly info in localStorage:', e)
       }
     }
   }
 
   createNewPlotSpec() {
-    // Try to load saved assembly info from localStorage
     try {
-      const savedAssembly = localStorage.getItem('gosling-assembly-info');
+      const savedAssembly = localStorage.getItem('gosling-assembly-info')
       if (savedAssembly) {
-        this.assemblyInfo = JSON.parse(savedAssembly);
+        this.assemblyInfo = JSON.parse(savedAssembly)
       }
     } catch (e) {
-      console.warn('Failed to load assembly info from localStorage:', e);
+      console.warn('Failed to load assembly info from localStorage:', e)
     }
 
     if (window.canvas_num == 0) {
@@ -156,7 +150,7 @@ class PlotSpecManager {
             linkingId: "detail",
             style: {
               background: "#FFFFFF",
-              backgroundOpacity: 1,
+              backgroundOpacity: 0.1,
             },
             tracks: [
               this.createGeneTrack(0),
@@ -167,7 +161,7 @@ class PlotSpecManager {
             ]
           }
         ]
-      };
+      }
     } else {
       return {
         views: [
@@ -183,7 +177,7 @@ class PlotSpecManager {
             linkingId: "detail",
             style: {
               background: "#FFFFFF",
-              backgroundOpacity: 1,
+              backgroundOpacity: 0.1,
             },
             tracks: [
               this.createTrack(),
@@ -194,12 +188,12 @@ class PlotSpecManager {
             ]
           }
         ]
-      };
+      }
     }
   }
 
   createTrack() {
-    return deepCopy(trackTemplate);
+    return deepCopy(trackTemplate)
   }
 
   /**
@@ -209,21 +203,30 @@ class PlotSpecManager {
    */
   createGeneTrack(index) {
     if (gene_template.views?.[0]?.tracks?.[index]) {
-        const track = deepCopy(gene_template.views[0].tracks[index]);
+        const track = deepCopy(gene_template.views[0].tracks[index])
 
-        // Add color configuration for strands
+        track.data = {
+            type: "gff",
+            url: "",
+            indexUrl: "",
+            attributesToFields: [
+                { attribute: "gene_biotype", defaultValue: "unknown" },
+                { attribute: "Name", defaultValue: "unknown" },
+                { attribute: "ID", defaultValue: "unknown" }
+            ]
+        }
+
         track.color = {
             field: "strand",
             type: "nominal",
             domain: ["+", "-"],
             range: ["#0000FF", "#FF0000"]
-        };
-  	    // Add row configuration for strands
+        }
   	    track.row = {
             field: "strand",
   			    type: "nominal",
   			    domain: ["+", "-"]
-  		  };
+  		  }
 
         track.tooltip = [
             { field: "start", type: "quantitative", alt: "Start Position" },
@@ -232,32 +235,32 @@ class PlotSpecManager {
             { field: "type", type: "nominal", alt: "Feature Type" },
             { field: "gene_biotype", type: "nominal", alt: "Gene Biotype" },
             { field: "ID", type: "nominal", alt: "Gene ID" }
-        ];
+        ]
 
-        return track;
+        return track
     }
-    return {};
+    return {}
 }
 
   generateCanvas(canvasId, newCanvasObject) {
-    const plotSpec = this.getPlotSpec();
-    const existingViewIndex = plotSpec.views.findIndex(view => view.id === canvasId);
+    const plotSpec = this.getPlotSpec()
+    const existingViewIndex = plotSpec.views.findIndex(view => view.id === canvasId)
 
     if (existingViewIndex !== -1) {
-      plotSpec.views[existingViewIndex] = newCanvasObject;
+      plotSpec.views[existingViewIndex] = newCanvasObject
     } else {
-      plotSpec.views.push(newCanvasObject);
+      plotSpec.views.push(newCanvasObject)
     }
   }
 
   resetInstance() {
-    this.plotSpecs[1] = this.createNewPlotSpec();
+    this.plotSpecs[1] = this.createNewPlotSpec()
   }
 }
 
 PlotSpecManager.prototype.exportPlotSpecAsJSON = function() {
-  const plotSpec = this.getPlotSpec();
-  const jsonString = JSON.stringify(plotSpec, null, 2);
-  return jsonString;
+  const plotSpec = this.getPlotSpec()
+  const jsonString = JSON.stringify(plotSpec, null, 2)
+  return jsonString
 }
-export { PlotSpecManager };
+export { PlotSpecManager }

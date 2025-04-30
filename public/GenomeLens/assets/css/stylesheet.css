@@ -16,6 +16,7 @@ html, body {
     "right";
     grid-template-columns: 1fr;
     grid-template-rows: 1fr, 1fr;
+    padding-bottom: 70px; /* Adjust if your footer is taller */
 }
 
 
@@ -652,4 +653,27 @@ label {
 #filename-modal.visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* --- Fixed Footer for Logos --- */
+.footer-logos {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+    background: rgba(255,255,255,0.95);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.07);
+    gap: 30px;
+}
+
+.footer-logos img, .footer-logos svg {
+    height: 40px;
+    margin: 0 10px;
+    vertical-align: middle;
+    /* Adjust as needed for your logo size */
 }

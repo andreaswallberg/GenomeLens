@@ -55,11 +55,9 @@
 }
 .file-container{
   display: grid;
-  grid-template-columns: minmax(100px, 1fr) 30px minmax(150px, 2fr) 70px;
-  grid-template-areas: "plot-button or-inbetween url-input url-button";
+  grid-template-columns: 1fr 30px 1fr 70px;
+  grid-template-areas: "plot-button or-inbetween  url-input url-button";
   width: 100%;
-  gap: 5px;
-  align-items: center;
 }
 .or-inbetween{
   grid-area: or-inbetween;
@@ -88,11 +86,9 @@
   color: #4d4d4d;
   border: 2px solid rgb(182, 181, 181);
   border-radius: 5px;
-  width: calc(100% - 10px);
+  width: 100%;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin-left: 10px;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .url-button {
@@ -103,9 +99,7 @@
   font-size: 14px;
   border: 1px solid rgb(56, 56, 56);
   border-radius: 4px;
-  height: 100%;
-  margin-left: 5px;
-  min-width: 60px;
+  height:100%; 
 }
 
 .apply-button{
