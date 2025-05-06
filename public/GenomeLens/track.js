@@ -292,14 +292,22 @@ export async function generateTrackBinAndSampleInputs(trackNumber) {
                       <label for="color_${trackNumber}" data-description-id="color">Color</label>
                       <select name="color" id="color_${trackNumber}" class="color" data-track="${trackNumber}">
                           <option value="#00aade"${trackNumber === 0 ? " selected" : ""}>blue</option>
-                          <option value="#e6461d"${trackNumber === 1 ? " selected" : ""}>red</option>
-                          <option value="#6acc0a"${trackNumber === 2 ? " selected" : ""}>green</option>
-                          <option value="#f9da02"${trackNumber === 3 ? " selected" : ""}>yellow</option>
-                          <option value="#9c41bf"${trackNumber === 4 ? " selected" : ""}>purple</option>
-                          <option value="#ff7f00"${trackNumber === 5 ? " selected" : ""}>orange</option>
-                          <option value="#000000"${trackNumber === 6 ? " selected" : ""}>black</option>
-                          <option value="#a7b0b7"${trackNumber === 7 ? " selected" : ""}>grey</option>
-  
+                          <option value="#6acfec"${trackNumber === 1 ? " selected" : ""}>light-blue</option>
+                          <option value="#006888"${trackNumber === 2 ? " selected" : ""}>dark-blue</option>
+                          <option value="#e6461d"${trackNumber === 3 ? " selected" : ""}>red</option>
+                          <option value="#ec866a"${trackNumber === 4 ? " selected" : ""}>light-red</option>
+                          <option value="#c02700"${trackNumber === 5 ? " selected" : ""}>dark-red</option>
+                          <option value="#6acc0a"${trackNumber === 6 ? " selected" : ""}>green</option>
+                          <option value="#aef766"${trackNumber === 7 ? " selected" : ""}>light-green</option>
+                          <option value="#52a302"${trackNumber === 8 ? " selected" : ""}>dark-green</option>
+                          <option value="#f9da02"${trackNumber === 9 ? " selected" : ""}>yellow</option>
+                          <option value="#9c41bf"${trackNumber === 10 ? " selected" : ""}>purple</option>
+                          <option value="#ff7f00"${trackNumber === 11 ? " selected" : ""}>orange</option>
+                          <option value="#000000"${trackNumber === 12 ? " selected" : ""}>black</option>
+                          <option value="#a7b0b7"${trackNumber === 13 ? " selected" : ""}>grey</option>
+                          <option value="#d2d8dc"${trackNumber === 14 ? " selected" : ""}>light-grey</option>
+                          <option value="#758087"${trackNumber === 15 ? " selected" : ""}>dark-grey</option>
+                          <option value="#ffffff"${trackNumber === 16 ? " selected" : ""}>white</option>
                       </select>
                   </div>
                   <div class="input-group">

@@ -41,11 +41,11 @@ export async function all_buttons(container) {
     <div class="body-container">
         <div class="left-section">
             <div class="canvas"> 
-                <button annotation-tooltip="This is mainly for GFF files to display the Chromosomes" id="canvas0" class="canvas-button">Annotations</button>
+                <button annotation-tooltip="This canvas loads compressed GFF annotation files to display features along chromosomes" id="canvas0" class="canvas-button">Annotations</button>
                 <button id="canvas1" class="canvas-button">Canvas 1</button>
                 <button id="canvas2" class="canvas-button">Canvas 2</button>
                 <button id="canvas3" class="canvas-button">Canvas 3</button>
-                <button  add-canvas-tooltip="This button is to add a new canvas up to 3" id="add_canvas" aria-label="Close"> <i class="fa fa-plus"></i></button>
+                <button  add-canvas-tooltip="This button is to add a new canvas. (max=3)" id="add_canvas" aria-label="Close"> <i class="fa fa-plus"></i></button>
             </div>  
             <div id="notification" style="display: none; color:white;border-radius: 5px ; padding: 10px; opacity:0.7; margin-top: 10px; position: absolute; top: 60px; left: 23%; transform: translateX(-50%); z-index: 1000;"></div>   
             <div id="header" class="buttons-container">   
@@ -80,9 +80,9 @@ export async function all_buttons(container) {
         </div>
         <div class="right-section">
             <div class='bars'> 
-                <button view-tooltip="This could be used to compare different canvases with different settings by adding a second view where each view is loaded with its own files or settings" id='view1-btn' class='view-btn'> View A </button>
-                <button id='view2-btn' class='view-btn' style='display:none;'> View B </button>
-                <button id='view3-btn' class='view-btn' style='display:none;'> View C </button>
+                <button view-tooltip="A view is used to select columns and ranges for X and Y axes. Multiple views can be used and switched between for comparing chromosomal regions or statistics." id='view1-btn' class='view-btn'> View A </button>
+                <button id='view2-btn' class='view-btn' style='display:none;'>View Controls B</button>
+                <button id='view3-btn' class='view-btn' style='display:none;'>View Controls C</button>
                 <button id="add_view" aria-label="Close"> <i class="fa fa-plus"></i></button>
             </div>
             ${generateViewControl(window.currentView)}
@@ -158,7 +158,7 @@ export async function all_buttons(container) {
             displayed_canvas = 2;
             window.canvas_num = 2;
             canvas_number.innerHTML = 'Canvas 2';
-            current_canvas.innerHTML = 'Current Canvas 2'
+            current_canvas.innerHTML = '  Current Canvas 2'
             if (!window.object_2_created) {
                 addOrUpdateCanvasObject('canvas2');
                 window.object_2_created = true;
@@ -172,7 +172,7 @@ export async function all_buttons(container) {
             window.canvas_num = 3;
             displayed_canvas = 3;
             canvas_number.innerHTML = 'Canvas 3';
-            current_canvas.innerHTML = 'Current Canvas 3'
+            current_canvas.innerHTML = '  Current Canvas 3'
             if (!window.object_3_created) {
                 addOrUpdateCanvasObject('canvas3');
                 window.object_3_created = true
@@ -395,7 +395,7 @@ export function addCanvasBarToggle(barId, containerId) {
                     tracks: [],
                     view_control_settings: {
                         x_axis: '',
-                        x_range: [0, 200000],
+                        x_range: [0, 1000000],
                         left_y_axis: '',
                         left_y_range: [0, 1],
                         right_y_axis: '',
@@ -476,7 +476,7 @@ export function view_control_apply_changes () {
         const x_end = parseFloat(document.getElementById('x_range_end').value);
         let x_interval = [x_start, x_end];  
         if(isNaN(x_start) && isNaN(x_end)) {
-            x_interval = [0, 200000];
+            x_interval = [0, 1000000];
         }
         // Left Y-axis range
         const y_start_left = parseFloat(document.getElementById('y_start_left').value);
@@ -576,18 +576,18 @@ function updateCanvasTitle(plotSpec, columns) {
         return; 
     }
 
-    let title = ` X: ${columns.xAxis} | `;
+    let title = ` X-axis: ${columns.xAxis}  `;
     
     // Add left Y-axis columns
     const leftChecked = document.querySelectorAll('#checkbox-left-axis input[type="checkbox"]:checked');
     if (leftChecked.length > 0) {
-        title += `Left Y: ${columns.leftYAxis}`;
+        title += `Y-axis (left): ${columns.leftYAxis}`;
     }
 
     // Add right Y-axis columns
     const rightChecked = document.querySelectorAll('#checkbox-right-axis input[type="checkbox"]:checked');
     if (rightChecked.length > 0) {
-        title += ` | Right Y: ${columns.rightYAxis}`;
+        title += `  Y-axis (right): ${columns.rightYAxis}`;
     }
 
     // Update the plot specification title
@@ -614,7 +614,7 @@ export function generateViewControl(currentView){
         return`            
         <div id='canvas-container-${currentView}' class='canvas-container'>
                     <div id='canvas-bar-${currentView}' class='canvas_bar'>
-                        <span class = 'view-control'>View Controls A </span>
+                        <span class = 'view-control'>View Controls A</span>
                         <span class = 'current-canvas'> </span>
                     </div>
                     <div class="canvas_content hidden">

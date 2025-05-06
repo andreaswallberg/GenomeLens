@@ -116,14 +116,18 @@ input[type="checkbox"] {
 }
 
 .apply-all-button:hover {
-  background-color: #3683d6;
+  background-color: #6bb3ff;
 }
 
 .canvas-container {
   background-color: #f6f6f6;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 0 0 12px 12px; 
+  /* box-shadow: 0 2px 4px rgba(0,0,0,0.1); */
+  right: 20px;
+
 }
 
 .copy_range_msg {
