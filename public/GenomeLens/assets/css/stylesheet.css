@@ -16,7 +16,7 @@ html, body {
     "right";
     grid-template-columns: 1fr;
     grid-template-rows: 1fr, 1fr;
-    padding-bottom: 70px
+    padding-bottom: 70px;
 }
 
 
@@ -28,7 +28,7 @@ html, body {
 }
 
 .buttons-container {
-    background-color: rgb(228, 228, 228);
+    background-color: #f6f6f6;
     width: 100%;
     padding: 15px;
     height: calc(100vh - 10px);
@@ -41,10 +41,10 @@ html, body {
     width: 100%;
     top: 50px;
     padding: 10px;
-    background-color: rgb(56, 56, 56);
+    background-color: #777777;
     color: white;
     font-size: 24px;
-    border: 1px solid rgb(56, 56, 56);
+    border: 1px solid #777777;
     border-radius: 4px;
 }
 
@@ -55,27 +55,28 @@ html, body {
 .track-container {
     position: relative;
     top: 50%;
-    background-color: rgb(182, 181, 181);
+    background-color: #e0e0e0;
     padding: 5px;
-    border-bottom:15px solid rgb(228, 228, 228);
     font-size: 14px;
+    border-radius: 4px;
 }
 
 #export-dropdown{
     position: relative;
-    left: 70%;
+    left: 60%;
     top: 1%;
     display: inline-block;
-    border: none;
-    background-color: #4d4d4d;
-    color: white;
-    padding: 5px;
+    border: 1px solid #e0e0e0;
+    background-color: #e0e0e0;
+    color: black;
+    padding: 12px;
     z-index: 1000;
-    width: 100px;
+    width: 200px;
 }
 
 #export-dropdown:hover, #export-pdf-button:hover{
-    background-color: rgb(180, 180, 180);
+    background-color: #e8e8e8;
+    border: 1px solid #e8e8e8;
     color: black;
 }
 
@@ -85,6 +86,8 @@ html, body {
 }
 
 #add_canvas{
+    background-color: #e0e0e0;
+    border: 1px solid #e0e0e0;
     padding: 5px;
     font-size: 20px;
     width: 50px;
@@ -95,7 +98,8 @@ html, body {
 }
 
 #add_canvas:hover {
-    background-color: rgb(56, 56, 56);
+    background-color: #e8e8e8;
+    border: 1px solid #e8e8e8;
     color: white;
 }
 
@@ -115,6 +119,8 @@ html, body {
 }
 
 #add_view{
+    background-color: #e0e0e0;
+    border: 1px solid #e0e0e0;
     padding: 5px;
     font-size: 20px;
     width: 50px;
@@ -125,24 +131,25 @@ html, body {
 }
 
 #add_view:hover{
-    background-color: rgb(56, 56, 56);
+    background-color: #e8e8e8;
+    border: 1px solid #e8e8e8;
     color: white;
 }
 
 .view-btn{
-    padding: 15px;
+    padding: 5px;
     background-color: none;
-    font-size: 15px;
+    font-size: 18px;
     border: none;
     width: 100%;
-    border-bottom: 2px solid black;
+    border-bottom: 3px solid #606060;
     margin-top: 10px;
     position: relative;
     left: 10px;
 } 
 
 .canvas-container {
-    background-color: rgb(211, 211, 211);
+    background-color: #e0e0e0;
     width: 97%;
     position: relative;
     padding: 20px;
@@ -154,14 +161,13 @@ html, body {
     background: none;
     border: none;
     font-size: 20px;
-    border-bottom: 3px solid rgb(82, 80, 78);
+    border-bottom: 3px solid #606060;
     box-shadow: none;
     outline: none;
     border-radius: 0;
     text-decoration: none;
     width: 100%;
-    transition: opacity 0.7s, color 0.3s, font-weight 0.3s;
-    color: rgb(82, 80, 78);
+    transition: opacity 0.7s, color 0.2s, font-weight 0.2s;
     cursor: pointer;
 }
 
@@ -183,7 +189,7 @@ html, body {
     display: none;
 }
 .canvas-button.active, .view-btn.active {
-    background-color: #007bff;
+    background-color: #409cff;
     color: white;
 }
 
@@ -201,7 +207,7 @@ html, body {
     font-size: 18px;
     border: none;
     border-radius: 5px;
-    background-color: rgb(63, 63, 63);
+    background-color: #777777;
     position: relative;
     width: 100%;
     padding: 10px;
@@ -213,6 +219,7 @@ html, body {
     grid-template-areas: "left-side right-side";
     grid-template-columns: repeat(2, 1fr);
     gap: 100px;
+    background-color: #e0e0e0;
 }
 
 
@@ -260,7 +267,6 @@ html, body {
 
 
 .plot-container {
-   
     position: relative;
     right: 10%;
     z-index: 1;
@@ -323,11 +329,12 @@ label {
 .add_track_button:hover{
     background-color: gray;
     cursor: pointer;
-  }
-  .view-btn:hover, .canvas-button:hover{
+}
+
+.view-btn:hover, .canvas-button:hover{
     cursor: pointer;
     background-color: #6bb3ff;
-  }
+}
 
 
 
@@ -541,18 +548,20 @@ label {
 
 .chromosome-select {
     width: 200px;
-    padding: 15px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 0px 0;
+    border: 2px solid #DDDDDD;
     border-radius: 4px;
-    font-size: 15px;
+    background-color: #f6f6f6;
+    font-size: 14px;
 }
 
 #chromosome-selector {
     margin-bottom: 15px;
-    padding: 15px;
+    padding: 0px;
     background-color: rgb(182, 181, 181);
     border-radius: 4px;
+    background-color: #e0e0e0;
 }
 
 .chromosome-controls {
@@ -563,7 +572,7 @@ label {
 
 .apply-chromosome-button {
     padding: 5px 15px;
-    background-color: #4CAF50;
+    background-color: #409cff;
     color: white;
     border: none;
     border-radius: 4px;
@@ -571,7 +580,7 @@ label {
 }
 
 .apply-chromosome-button:hover {
-    background-color: #45a049;
+    background-color: #409cff;
 }
 
 [annotation-tooltip]:hover::after {

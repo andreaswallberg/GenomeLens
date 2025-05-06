@@ -26,9 +26,9 @@ label {
 select {
   width: 100%;
   padding: 5px;
-  border: 1px solid #ccc;
+  border: 2px solid #eeeeee;
   border-radius: 4px;
-  background-color: white;
+  background-color: #ffffff;
   margin-bottom: 10px;
 }
 
@@ -36,8 +36,9 @@ select {
 input[type="text"] {
   width: calc(50% - 15px);
   padding: 5px;
-  border: 1px solid #ccc;
+  border: 2px solid #eeeeee;
   border-radius: 4px;
+  background-color: #ffffff;
   margin-bottom: 10px;
 }
 
@@ -105,28 +106,27 @@ input[type="checkbox"] {
   display: block;
   width: 100%;
   padding: 10px;
-  background-color: #007bff;
+  background-color: #409cff;
   color: white;
   border: none;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 20px;
   cursor: pointer;
   margin-top: 20px;
 }
 
 .apply-all-button:hover {
-  background-color: #0056b3;
+  background-color: #3683d6;
 }
 
 .canvas-container {
-  background-color: #f0f0f0;
+  background-color: #f6f6f6;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .copy_range_msg {
-  color: rgb(101, 155, 20);
   font-size: 15px;
   font-weight: bold;
   position: absolute;
@@ -142,9 +142,10 @@ input[type="checkbox"] {
   position: relative;
   top: 7px;
   left: 5px;
-  background-color: rgb(81, 143, 224);
-  border: none;
-  color: white;
+  border: 2px solid #eeeeee;
+  border-radius: 4px;
+  background-color: #ffffff;
+  color: black;
   border-radius: 4px;
 }
 
