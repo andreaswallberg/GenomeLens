@@ -7,7 +7,7 @@
 import { GoslingPlotWithLocalData, getCurrentViewSpec } from './plot.js';
 import { updateURLParameters } from './update_plot_specifications.js';
 import {exportingFigures} from './exporting_functionality.js';
-import {generateTracks} from './track.js'
+import {generateTracks} from './track.js';
 
 /**
  * Sets up all button functionality and event listeners for the application's GUI.
@@ -52,7 +52,7 @@ export async function all_buttons(container) {
                 <select id="export-dropdown" class="dropdown-content">
                     <option value="" disabled selected>Export visualization as</option>
                     <option id="export-html-button" value="html">HTML</option>
-                </select> 
+                </select>
                 <div class="btn-row">
                     <h2 class='canvas_number'>Annotation</h2>
                     <h2>Track Controls</h2>

@@ -137,19 +137,18 @@ export function exportingFigures() {
 
     exportDropdown.addEventListener('change', async (event) => {
         const selectedValue = event.target.value;
+
         const container = document.getElementById('plot-container-1');
-        
+
         if (!container) {
             console.error('Plot container element not found');
             showMessage('Plot container element not found', '#ff0000');
             return;
         }
 
-        // Show filename modal and handle export
         const handleExport = (defaultName) => {
             const modal = document.getElementById('filename-modal');
             modal.style.display = 'block';
-            // Add delay to trigger transition
             setTimeout(() => modal.classList.add('visible'), 10);
             const input = document.getElementById('filename-input');
             input.value = defaultName;
@@ -167,43 +166,34 @@ export function exportingFigures() {
                 modal.style.display = 'none';
 
                 showLoading();
-                if (selectedValue === 'html') {
-                    try {
-                        // Generate the HTML content
+
+                try {
+                    if (selectedValue === 'html') {
                         const htmlContent = await generateHTMLContent(window.plotSpecManager.getPlotSpec());
-            
-                        // Create a Blob from the HTML content
                         const blob = new Blob([htmlContent], { type: 'text/html' });
-            
-                        // Create a URL for the Blob
                         const url = window.URL.createObjectURL(blob);
-            
-                        // Create a temporary anchor element to trigger the download
                         const a = document.createElement('a');
                         a.href = url;
                         a.download = `${filename}.html`;
-            
-                        // Append the anchor to the document, trigger the click, and remove it
                         document.body.appendChild(a);
                         a.click();
                         window.URL.revokeObjectURL(url);
                         document.body.removeChild(a);
-            
-                        showMessage('HTML file downloaded successfully!!!', '#02a102');
-                    } catch (error) {
-                        console.error('Error during export:', error);
-                        showMessage('Error during export: ' + error.message, '#ff0000');
-                    } finally {
-                        hideLoading();
-                        exportDropdown.value = '';
+                        showMessage('HTML file downloaded successfully', '#02a102');
                     }
+                } catch (error) {
+                    console.error('Error during export:', error);
+                    showMessage('Error during export: ' + error.message, '#ff0000');
+                } finally {
+                    hideLoading();
+                    exportDropdown.value = '';
                 }
             };
         };
 
         switch (selectedValue) {
             case 'html':
-                handleExport('plot-container');
+                handleExport('exported-visualization');
                 break;
             default:
                 console.error('Invalid export option selected');
