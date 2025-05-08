@@ -165,7 +165,7 @@ export function exportingFigures() {
                 setTimeout(() => modal.style.display = 'none', 300);
                 const filename = input.value.trim() || defaultName;
                 modal.style.display = 'none';
-                
+
                 showLoading();
                 if (selectedValue === 'html') {
                     try {
@@ -189,7 +189,7 @@ export function exportingFigures() {
                         window.URL.revokeObjectURL(url);
                         document.body.removeChild(a);
             
-                        showMessage('HTML file downloaded successfully', '#02a102');
+                        showMessage('HTML file downloaded successfully!!!', '#02a102');
                     } catch (error) {
                         console.error('Error during export:', error);
                         showMessage('Error during export: ' + error.message, '#ff0000');

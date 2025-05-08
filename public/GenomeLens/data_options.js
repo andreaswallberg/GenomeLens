@@ -50,7 +50,7 @@ export async function all_buttons(container) {
             <div id="notification" style="display: none; color:white;border-radius: 5px ; padding: 10px; opacity:0.7; margin-top: 10px; position: absolute; top: 60px; left: 23%; transform: translateX(-50%); z-index: 1000;"></div>   
             <div id="header" class="buttons-container">   
                 <select id="export-dropdown" class="dropdown-content">
-                    <option value="" disabled selected>Export visualization as ...</option>
+                    <option value="" disabled selected>Export visualization as</option>
                     <option id="export-html-button" value="html">HTML</option>
                 </select> 
                 <div class="btn-row">
