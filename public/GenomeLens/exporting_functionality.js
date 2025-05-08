@@ -168,40 +168,35 @@ export function exportingFigures() {
                 
                 showLoading();
                 if (selectedValue === 'html') {
-                    const htmlContent = await generateHTMLContent(window.plotSpecManager.getPlotSpec());
-                    fetch('/save-html', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ htmlContent }),
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-                        return response.text();
-                    })
-                    .then(htmlContent => {
+                    try {
+                        // Generate the HTML content
+                        const htmlContent = await generateHTMLContent(window.plotSpecManager.getPlotSpec());
+            
+                        // Create a Blob from the HTML content
                         const blob = new Blob([htmlContent], { type: 'text/html' });
+            
+                        // Create a URL for the Blob
                         const url = window.URL.createObjectURL(blob);
+            
+                        // Create a temporary anchor element to trigger the download
                         const a = document.createElement('a');
                         a.href = url;
                         a.download = `${filename}.html`;
+            
+                        // Append the anchor to the document, trigger the click, and remove it
                         document.body.appendChild(a);
                         a.click();
                         window.URL.revokeObjectURL(url);
                         document.body.removeChild(a);
+            
                         showMessage('HTML file downloaded successfully', '#02a102');
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
+                    } catch (error) {
+                        console.error('Error during export:', error);
                         showMessage('Error during export: ' + error.message, '#ff0000');
-                    })
-                    .finally(() => {
+                    } finally {
                         hideLoading();
                         exportDropdown.value = '';
-                    });
+                    }
                 }
             };
         };
