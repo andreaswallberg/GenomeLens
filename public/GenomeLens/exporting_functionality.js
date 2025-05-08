@@ -43,12 +43,12 @@ async function generateHTMLContent(plotSpec) {
                 <script type="importmap">
                 {
                     "imports": {
-              "react": "https://esm.sh/react@18",
-              "react-dom": "https://esm.sh/react-dom@18",
-              "pixi": "https://esm.sh/pixi.js@6",
-              "higlass-text": "https://esm.sh/higlass-text/es/index.js",
-              "higlass": "https://esm.sh/higlass@1.13?external=react,react-dom,pixi",
-              "gosling.js": "https://esm.sh/gosling.js@0.17.0?external=react,react-dom,pixi,higlass,higlass-text"
+                        "react": "https://esm.sh/react@18",
+                        "react-dom": "https://esm.sh/react-dom@18",
+                        "pixi": "https://esm.sh/pixi.js@6",
+                        "higlass-text": "https://esm.sh/higlass-text/es/index.js",
+                        "higlass": "https://esm.sh/higlass@1.13?external=react,react-dom,pixi",
+                        "gosling.js": "https://esm.sh/gosling.js@0.17.0?external=react,react-dom,pixi,higlass,higlass-text"
                     }
                 }
                 </script>
@@ -120,7 +120,7 @@ export function exportingFigures() {
     loadingOverlay.innerHTML = '<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 25px;">Downloading...</div>';
     document.body.appendChild(loadingOverlay);
 
-    // To dispaly loading
+    // To display loading
     const showLoading = () => {
         loadingOverlay.style.display = 'block';
     };
