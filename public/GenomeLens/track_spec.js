@@ -26,8 +26,8 @@ const trackTemplate = {
     "opacity": { "value": 1 },
     "size": { "value": 2 },
     "tooltip": [
-        { "field": y_col_preset, "type": "quantitative", "format": "0.4f", "alt": y_col_preset },
-        { "field": x_col_preset, "type": "genomic", "format": "0.4f", "alt": x_col_preset }
+        { "field": y_col_preset, "type": "quantitative", "alt": y_col_preset },
+        { "field": x_col_preset, "type": "genomic", "alt": x_col_preset }
     ],
 };
 
