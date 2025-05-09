@@ -661,7 +661,7 @@ label {
     left: 0;
     bottom: 0;
     width: 100vw;
-    background: rgba(255,255,255,0.95);
+    background: rgba(255,255,255,1);
     z-index: 2000;
     display: flex;
     justify-content: center;
@@ -672,7 +672,41 @@ label {
 }
 
 .footer-logos img, .footer-logos svg {
-    height: 40px;
+    height: 60px;
     margin: 0 10px;
     vertical-align: middle;
+}
+
+/* Style for the footer container */
+.footer {
+    display: flex;
+    justify-content: space-between; /* Space between logos and the link */
+    align-items: center; /* Vertically align items */
+    padding: 10px;
+}
+
+/* Style for the GitHub link */
+.footer-link {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0);
+    z-index: 2000;
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    padding: 20px 20px 30px 20px;
+
+}
+
+.footer-link a {
+    text-decoration: none;
+    color: black; /* Link color */
+    font-weight: normal;
+    font-size: 18px;
+}
+
+.footer-link a:hover {
+    color: #007bff; /* Link color */
+    text-decoration: underline; /* Add underline on hover */
 }
