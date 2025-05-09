@@ -379,27 +379,15 @@ export async function checkURLParameters(track, track_nr) {
         plotSpec.style = {};
       }
 
-      if (!Array.isArray(track.tooltip)) {
-        track.tooltip = [];
-      }
-
-      while (track.tooltip.length < 2) {
-        track.tooltip.push({});
-      }
-
       if (track.x) {
         const xField = urlSearch.get(generateParamName("x.field")) || track.data.column;
         track.x.field = xField;
-        track.tooltip[1].field = xField;
-        track.tooltip[1].alt = xField;
         track.data.column = xField;
       }
 
       if (track.y) {
         const yField = urlSearch.get(generateParamName("y.field")) || track.data.value;
         track.y.field = yField;
-        track.tooltip[0].field = yField;
-        track.tooltip[0].alt = yField;
         track.data.value = yField;
       }
 

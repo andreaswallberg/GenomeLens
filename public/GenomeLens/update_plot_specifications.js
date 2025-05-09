@@ -34,6 +34,7 @@ export async function handleOptions(data, button_data_track_number) {
   const columnSelectorsY = document.querySelectorAll(`.columnSelectorY`);
 
   let header = [];
+  let headerNoSort = [];
   let geneData = [];
 
   // Check if the provided data is a file or a URL
@@ -61,16 +62,27 @@ export async function handleOptions(data, button_data_track_number) {
         }
       });
     } else {
-      header = await extractHeader(data, button_data_track_number, plotSpec);
+      headerNoSort = await extractHeaderNoSort(data, button_data_track_number, plotSpec);
     }
   } else if (data instanceof Blob) {
-    header = await extractHeaderFromServer(data, button_data_track_number, plotSpec);
+    headerNoSort = await extractHeaderFromServer(data, button_data_track_number, plotSpec);
   } else {
     let msg = document.getElementById(`msg-load-track-${button_data_track_number}`);
     msg.textContent = "Invalid data type. Expected File or Blob.";
     msg.className = "error-msg";
     console.error("Invalid data type. Expected File or Blob.");
     return;
+  }
+
+  header = Array.from(headerNoSort);
+  // Set a default header for the x axis by reordering the columns
+  const posIndex = header.findIndex(column => 
+    /^pos/i.test(column.trim()) // Use a case-insensitive regex to match columns starting with "pos"
+  );
+  if (posIndex !== -1) { // Ensure the column exists before swapping
+    const temp = header[0];
+    header[0] = header[posIndex];
+    header[posIndex] = temp;
   }
 
   if (!fileHeaders.has(button_data_track_number)) {
@@ -106,7 +118,7 @@ export async function handleOptions(data, button_data_track_number) {
     });
 
     // Update the tooltip for each track dynamically based on the available columns
-    updateDynamicTooltips(plotSpec, header, button_data_track_number);
+    updateDynamicTooltips(plotSpec, header, headerNoSort, button_data_track_number);
   
   }
 
@@ -462,13 +474,38 @@ async function extractHeader(file, button_data_track_number, plotSpec) {
       const text = reader.result;
       const data = text.split('\n').map(row => row.split(plotSpec.tracks[button_data_track_number].data.separator));
       const header = data[0];
+      // Set a default header for the x axis by reordering the columns
       const posIndex = header.findIndex(column => 
-        column.trim().toLowerCase() === 'pos'
+        /^pos/i.test(column.trim()) // Use a case-insensitive regex to match columns starting with "pos"
       );
-      temp = header[0]
-      header[0] = header[posIndex]
-      header[posIndex] = temp
+      if (posIndex !== -1) { // Ensure the column exists before swapping
+        const temp = header[0];
+        header[0] = header[posIndex];
+        header[posIndex] = temp;
+      }
 
+      resolve(header);
+    };
+    reader.onerror = reject;
+    reader.readAsText(file);
+  });
+}
+/**
+ * Extract the header from a local file using FileReader without sorting.
+ * 
+ * @param {File} file - Local file.
+ * @param {number} button_data_track_number - Button data track number.
+ * @param {object} plotSpec - The plot specification object.
+ * @returns {Promise<Array>} - Promise resolving to the extracted header.
+ */
+async function extractHeaderNoSort(file, button_data_track_number, plotSpec) {
+  let temp = null
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const text = reader.result;
+      const data = text.split('\n').map(row => row.split(plotSpec.tracks[button_data_track_number].data.separator));
+      const header = data[0];
       resolve(header);
     };
     reader.onerror = reject;
@@ -513,7 +550,7 @@ export async function updateURLParameters(parameter, value) {
  * @param {Array} header - List of column headers extracted from the data file.
  * @param {number} button_data_track_number - Button data track number.
  */
-function updateDynamicTooltips(plotSpec, header, button_data_track_number) {
+function updateDynamicTooltips(plotSpec, header, headerNoSort, button_data_track_number) {
     // Store headers per canvas and track
     if (!window.tooltipHeaders) {
         window.tooltipHeaders = {
@@ -526,6 +563,21 @@ function updateDynamicTooltips(plotSpec, header, button_data_track_number) {
 
     // Store headers for this specific canvas and track
     window.tooltipHeaders[window.canvas_num][button_data_track_number] = header.map(item => 
+        item.trim().replace(/\r$/, '')
+    );
+
+    // Store headers per canvas and track
+    if (!window.tooltipHeadersNoSort) {
+      window.tooltipHeadersNoSort = {
+          0: {},
+          1: {},
+          2: {},
+          3: {} 
+      };
+    }
+
+    // Store unsorted headers for this specific canvas and track (used for tooltips)
+    window.tooltipHeadersNoSort[window.canvas_num][button_data_track_number] = headerNoSort.map(item => 
         item.trim().replace(/\r$/, '')
     );
 
@@ -544,7 +596,7 @@ function updateDynamicTooltips(plotSpec, header, button_data_track_number) {
             ];
         } else {
             // For CSV/TSV data, use stored headers for this specific track
-            const trackHeaders = window.tooltipHeaders[window.canvas_num][button_data_track_number];
+            const trackHeaders = window.tooltipHeadersNoSort[window.canvas_num][button_data_track_number];
             plotSpec.tracks[button_data_track_number].tooltip = trackHeaders.map(column => ({
                 field: column,
                 type: 'nominal',

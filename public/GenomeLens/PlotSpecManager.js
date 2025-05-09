@@ -201,7 +201,8 @@ class PlotSpecManager {
   }
 
   createTrack() {
-    return deepCopy(trackTemplate);
+    const track = deepCopy(trackTemplate);
+    return track;
   }
 
   /**

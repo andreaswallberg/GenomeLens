@@ -213,7 +213,7 @@ export async function showHideTracks () {
 
 const tooltips = {
   binsize: 'Bin size controls the width of genomic intervals (bp) used to aggregate and display data. Small bin sizes show more detail but can be slower to render. (default=10)',
-  samplelength: '"Sample length sets how many data points are sampled and rendered at once. (default=1000)',
+  samplelength: 'Sample size sets how many data points are sampled and rendered at once. (default=1000)',
   mark: 'Choose the marker type for the visualization. (default=point)',
   color: 'Select the color for the plots. (default=blue)',
   marksize: 'Specify the size of the markers. (default=3)',
@@ -272,7 +272,7 @@ export async function generateTrackBinAndSampleInputs(trackNumber) {
                   <input type="number" class="interval-input" name="binsize" id="binsize_${trackNumber}" value="10">
               </div>
               <div class="input-group">
-              <label for="samplelength_${trackNumber}" data-description-id="samplelength">Sample length</label>
+              <label for="samplelength_${trackNumber}" data-description-id="samplelength">Sample size</label>
                 <input type="number" class="interval-input" name="samplelength" id="samplelength_${trackNumber}" value="1000">
               </div>
               <div class="input-group"> 
