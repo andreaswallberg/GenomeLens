@@ -600,6 +600,7 @@ function updateDynamicTooltips(plotSpec, header, headerNoSort, button_data_track
             plotSpec.tracks[button_data_track_number].tooltip = trackHeaders.map(column => ({
                 field: column,
                 type: 'nominal',
+                 format: "0.4f",
                 alt: column
             }));
         }

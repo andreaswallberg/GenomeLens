@@ -5,15 +5,15 @@
 # Distributed as a companion CLI script to GenomeLens under the same license.
 
 # The purpose of this Perl script is to rewrite a GFF file so that parts of
-# genes (e.g. CDSs and UTRs) can be displayed in GenomeLens. Features to match
-# and rewrite are specified with one or case insensitive patterns. The input GFF
-# can be compressed with gzip/bgzip or uncompressed.
+# genes (e.g. CDSs and UTRs) can be displayed in GenomeLens. The user specifies
+# one or more features to rewrite and plot using case insensitive patterns.
+# The input GFF can be compressed with gzip/bgzip or uncompressed.
 
 # Typical usage:
 
-# perl rewrite_gff.pl --rewrite CDS UTR --in myfile.gff > myfile.rewritten.gff
+# perl rewrite_gff.pl --rewrite CDS UTR --in myfile.gff
 # or
-# ./rewrite_gff.pl --rewrite CDS UTR --in myfile.gff > myfile.rewritten.gff
+# ./rewrite_gff.pl --rewrite CDS UTR --in myfile.gff
 
 use strict;
 use warnings;
@@ -61,6 +61,8 @@ foreach my $gff_file ( @{ $opt->{ 'in' } } ) {
 		open ( $gff_in , "<" , $gff_file ) or die "$!";
 	
 	}
+	
+	open ( my $out , ">" , "${gff_file}.rewritten.gff" ) or die "$!";
 
 	while (<$gff_in>) {
 
@@ -143,7 +145,7 @@ foreach my $gff_file ( @{ $opt->{ 'in' } } ) {
 				
 				$data[ 8 ] = join ( ";" , @attributes );
 				
-				say join ( "\t" , @data );
+				say $out join ( "\t" , @data );
 			
 			}
 		

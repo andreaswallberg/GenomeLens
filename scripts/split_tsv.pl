@@ -5,9 +5,9 @@
 # Distributed as a companion CLI script to GenomeLens under the same license.
 
 # The purpose of this Perl script is to split a TSV file by data labels
-# provided in any of the columns of the TSV file. The desired column to split on
-# is given by its header. The input TSV can be compressed with gzip/bgzip or
-# uncompressed.
+# provided in any of the columns of the TSV file. The user provides the column
+# header for the desired column to split data by. The input TSV can be
+# compressed with gzip/bgzip or uncompressed.
 
 # Typical usage:
 
@@ -15,8 +15,8 @@
 # or
 # ./split_tsv.pl --split CHROM --in myfile.tsv
 
-# This will create new TSV file, one for each label in the CHROM column (i.e.
-# one for each chromosome). Other labels can for examples be types of SNPs (e.g.
+# This will create new TSV files, one for each label in the CHROM column (i.e.
+# one for each chromosome). Other labels can for example be types of SNPs (e.g.
 # missense, synonymous etc.).
 
 use strict;
