@@ -55,7 +55,7 @@ By hovering the pointer over a data point, all information about that data point
 
 Using a button in the Annotations/Canvas tabs, the visualization can be exported as a stand-alone, interactive HTML file (sans any dialogs or widgets to reconfigure it). There is otherwise no way to explicitly save a session in GenomeLens.
 
-Here is an [example of an interactive visualization](/public/GenomeLens/assets/examples/Krill_sweep_Star.html) of a selective sweep region in the Northern krill (*Meganyctiphanes norvegica*).
+Here is an [example of an interactive visualization](https://andreaswallberg.github.io/GenomeLens/public/GenomeLens/assets/examples/Krill_sweep_Star.html) of a selective sweep region in the Northern krill (*Meganyctiphanes norvegica*).
 
 It shows a visualization of a ~400,000 bp region of a chromosome. The top canvas shows the location of three genes (Alg2, Star, and an unnamed gene). The next canvases show a comparison of genetic variation between an Atlantic and a Mediterranean population of the krill. The second canvas highlights high FST values at the gene Star, indicating genetic differentiation between Atlantic and Mediterranean populations (window-based area plot in light-blue; SNP data as blue dots and missense variants as large red dots). The next panel shows reduced genetic variation in the Atlantic population (negative XP-nSL), consistent with a selective sweep. The last panel shows the nucleotide diversity per base (pi/bp) of each population. Star, involved in eye development and sleep regulation, may have evolved under natural selection to adapt Atlantic krill to local light conditions. This is an example of genetic adaptation to the environment through natural selection.
 
