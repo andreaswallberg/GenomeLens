@@ -81,8 +81,8 @@ export async function all_buttons(container) {
         <div class="right-section">
             <div class='bars'> 
                 <button view-tooltip="A view is used to select columns and ranges for X and Y axes. Multiple views can be used and switched between for comparing chromosomal regions or statistics." id='view1-btn' class='view-btn'> View A </button>
-                <button id='view2-btn' class='view-btn' style='display:none;'>View Controls B</button>
-                <button id='view3-btn' class='view-btn' style='display:none;'>View Controls C</button>
+                <button id='view2-btn' class='view-btn' style='display:none;'>View B</button>
+                <button id='view3-btn' class='view-btn' style='display:none;'>View C</button>
                 <button id="add_view" aria-label="Close"> <i class="fa fa-plus"></i></button>
             </div>
             ${generateViewControl(window.currentView)}
@@ -617,7 +617,7 @@ export function generateViewControl(currentView){
                         <span class = 'view-control'>View Controls A</span>
                         <span class = 'current-canvas'> </span>
                     </div>
-                    <div class="canvas_content hidden">
+                    <div class="canvas_content">
                     
                         <div class="btn-row" id="global-variables">
                             <h2 class='x_axis_h2'>X axis</h2>
