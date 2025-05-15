@@ -2,6 +2,20 @@
 
 ![GenomeLens in action](/public/GenomeLens/assets/images/multiple_canvases_and_tracks.png)
 
+### Table of Contents
+
+* [Introduction](#Introduction)
+* [Implementation](#Implementation)
+* [Design Philosophy](#Design-Philosophy)
+* [Workflow](#Workflow)
+* [Exporting visualizations](#Exporting-visualizations)
+* [About TSV data](#About-TSV-data)
+* [About GFF data](#About-GFF-data)
+* [Running a local instance of GenomeLens](#Running-a-local-instance-of-GenomeLens)
+* [Acknowledgments](#Acknowledgments)
+
+## Introduction
+
 **GenomeLens** is an open source tool for interactive visualization of genetic data along chromosomes. It supports both point-based data (e.g., SNPs) and window-based data (e.g., averages). A typical use case is to explore patterns of genetic variation—such as diversity or divergence—along a sequence, helping users inspect and highlight regions of interest. In principle, any quantitative data can be visualized, e.g. depth of coverage, population sample sizes in windows or gene-wide estimates such as rates of molecular evolution.
 
 The main motivation behind this tool is to lower the time and expertise thresholds needed to visualize biodiversity data. It aims to promote discovery through interactive exploration and to facilitate collaboration and dissemination by enabling easy sharing of interactive plots.
@@ -37,7 +51,7 @@ For feature annotations, multi-sequence GFF files are supported, and users can s
 
 **Note**: due to how data is loaded in chunks and binned in Gosling.js, not all data points may be shown at any one time. Rather, representative dots are selected. In such cases, new data points usually appear when the user zoom in. To show all points, the user may need to set the "sample size" to a value higher than the number of data points in the dataset. Depending on the size of the dataset, this might hurt performance. This is another reason why GenomeLens is not appropriate to show genome-wide Manhattan plots.
 
-### Workflow
+## Workflow
 
 A typical GenomeLens session begins with the optional loading of a compressed GFF file and its index through the Annotations tab, in order to show genes or other features. Users then load one or more TSV data files using the Canvas tabs.
 
@@ -51,7 +65,7 @@ By hovering the pointer over a data point, all information about that data point
 
 ![Tooltips](/public/GenomeLens/assets/images/tooltips.png)
 
-### Exporting visualizations
+## Exporting visualizations
 
 Using a button in the Annotations/Canvas tabs, the visualization can be exported as a stand-alone, interactive HTML file (sans any dialogs or widgets to reconfigure it). There is otherwise no way to explicitly save a session in GenomeLens.
 
@@ -59,7 +73,7 @@ Here is an [example of an interactive visualization](https://andreaswallberg.git
 
 It shows a visualization of a ~400,000 bp region of a chromosome. The top canvas shows the location of three genes (Alg2, Star, and an unnamed gene). The next canvases show a comparison of genetic variation between an Atlantic and a Mediterranean population of the krill. The second canvas highlights high FST values at the gene Star, indicating genetic differentiation between Atlantic and Mediterranean populations (window-based area plot in light-blue; SNP data as blue dots and missense variants as large red dots). The next panel shows reduced genetic variation in the Atlantic population (negative XP-nSL), consistent with a selective sweep. The last panel shows the nucleotide diversity per base (pi/bp) of each population. Star, involved in eye development and sleep regulation, may have evolved under natural selection to adapt Atlantic krill to local light conditions. This is an example of genetic adaptation to the environment through natural selection.
 
-### About TSV data
+## About TSV data
 
 All quantitative data is provided as TSV files (which need to have the `.tsv` file ending to be parsed correctly). GenomeLens does not filter or transform any data, so log-transformation or filtering below/above thresholds and similar need to be performed by the user before loading the data.
 
@@ -93,7 +107,7 @@ GenomeLens supports the following markers: point, line, area, rectangle, triangl
 
 ![Stacked tracks](/public/GenomeLens/assets/images/stacked_tracks.png)
 
-### About GFF data
+## About GFF data
 
 GenomeLens can read compressed multi-sequence GFF files, after which the user selects the relevant sequence to plot features for using a dropdown menu. Features are separated by strand (upper=plus; lower=minus).
 
